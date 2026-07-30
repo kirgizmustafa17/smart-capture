@@ -108,6 +108,14 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 // Handle screenshot capture messages from content scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'OPEN_EDITOR') {
+    chrome.storage.local.set({ pendingScreenshot: message.dataUrl }, () => {
+      chrome.tabs.create({ url: chrome.runtime.getURL('editor/editor.html') });
+      sendResponse({ success: true });
+    });
+    return true;
+  }
+
   if (message.action === 'CAPTURE_VISIBLE_TAB') {
     const options = { format: 'png', quality: 100 };
 

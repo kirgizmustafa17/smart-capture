@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartCapture Beta PRO - Görsel Düzenleyici Stüdyosu</title>
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <div class="editor-layout">
+    <!-- Top Header Bar -->
+    <header class="editor-header">
+      <div class="brand">
+        <img src="../icons/icon48.png" alt="Logo" class="brand-logo">
+        <div class="brand-title">
+          <h1>SmartCapture Studio <span class="badge-pro">PRO BETA</span></h1>
+          <p id="image-dimensions-info">Görsel Yükleniyor...</p>
+        </div>
+      </div>
+
+      <!-- Center Tool Palette -->
+      <div class="toolbar-center">
+        <div class="tool-group">
+          <button class="tool-btn active" data-tool="select" title="Seç / Görseli Taşı">
+            <span>🔍</span> <span class="btn-label">Seç</span>
+          </button>
+          <button class="tool-btn" data-tool="arrow" title="Ok Çiz">
+            <span>↗️</span> <span class="btn-label">Ok</span>
+          </button>
+          <button class="tool-btn" data-tool="rect" title="Çerçeve Kutu Çiz">
+            <span>⬛</span> <span class="btn-label">Kutu</span>
+          </button>
+          <button class="tool-btn" data-tool="blur" title="Hassas Bilgiyi Sansürle/Mozaikle">
+            <span>💧</span> <span class="btn-label">Sansür (Blur)</span>
+          </button>
+          <button class="tool-btn" data-tool="text" title="Metin Ekle">
+            <span>🔤</span> <span class="btn-label">Yazı</span>
+          </button>
+          <button class="tool-btn" id="btn-undo" title="Son İşlemi Geri Al (Ctrl+Z)">
+            <span>↩️</span> <span class="btn-label">Geri Al</span>
+          </button>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Color Palette -->
+        <div class="color-palette">
+          <div class="color-dot active" data-color="#ef4444" style="background:#ef4444;" title="Kırmızı"></div>
+          <div class="color-dot" data-color="#f59e0b" style="background:#f59e0b;" title="Sarı"></div>
+          <div class="color-dot" data-color="#06b6d4" style="background:#06b6d4;" title="Cyan Mavi"></div>
+          <div class="color-dot" data-color="#10b981" style="background:#10b981;" title="Yeşil"></div>
+          <div class="color-dot" data-color="#ffffff" style="background:#ffffff;" title="Beyaz"></div>
+          <div class="color-dot" data-color="#090d16" style="background:#090d16; border:1px solid #475569;" title="Siyah"></div>
+        </div>
+      </div>
+
+      <!-- Right Action Export Controls -->
+      <div class="header-actions">
+        <select id="export-format" class="format-select">
+          <option value="image/png">PNG Formatı</option>
+          <option value="image/jpeg">JPEG Formatı</option>
+          <option value="image/webp">WebP Formatı</option>
+        </select>
+
+        <button id="btn-copy" class="btn btn-primary">
+          <span>📋</span> Panoya Kopyala
+        </button>
+        <button id="btn-download" class="btn btn-secondary">
+          <span>💾</span> Resmi İndir
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Studio Canvas -->
+    <main class="editor-workspace">
+      <div class="canvas-container">
+        <canvas id="studio-canvas"></canvas>
+      </div>
+    </main>
+
+    <!-- Footer Bar -->
+    <footer class="editor-footer">
+      <span>SmartCapture PRO • Tam Ekran Düzenleyici</span>
+      <span id="shortcuts-info">Kısayollar: [Esc] Kapat • [Ctrl+Z] Geri Al • [Ctrl+C] Kopyala • [Ctrl+S] İndir</span>
+    </footer>
+  </div>
+
+  <script src="../lib/utils.js"></script>
+  <script src="../content/editor.js"></script>
+  <script src="editor.js"></script>
+</body>
+</html>

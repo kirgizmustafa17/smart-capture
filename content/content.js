@@ -229,7 +229,7 @@ window.SmartContentController = (function () {
   }
 
   /**
-   * Check auto settings (copy/download) and present preview modal
+   * Check auto settings (copy/download) and open full-screen Editor Studio in a new tab
    */
   function processCapturedImage(dataUrl) {
     chrome.storage.sync.get(['autoCopy', 'autoDownload'], (settings) => {
@@ -246,7 +246,10 @@ window.SmartContentController = (function () {
         SmartUtils.showToast(SmartUtils.t('downloadSuccess', 'İndiriliyor...'), 'success');
       }
 
-      showPreviewModal(dataUrl);
+      // Open in full-screen Editor Studio tab
+      chrome.runtime.sendMessage({ action: 'OPEN_EDITOR', dataUrl }, () => {
+        SmartUtils.showToast("Görsel Düzenleyici yeni sekmede açılıyor...", "info");
+      });
     });
   }
 
