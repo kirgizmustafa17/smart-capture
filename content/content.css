@@ -1,0 +1,440 @@
+/* ==========================================================================
+   SmartCapture - Modern Production CSS (Glassmorphism & High Tech Overlay)
+   ========================================================================== */
+
+/* Isolation namespace to prevent target page CSS interference */
+.snapblock-ui-root {
+  all: initial;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+.snapblock-ui-root *,
+.snapblock-ui-root *::before,
+.snapblock-ui-root *::after {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   1. ELEMENT INSPECTOR OVERLAY
+   -------------------------------------------------------------------------- */
+#snapblock-inspector-overlay {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2147483640;
+  border: 2px dashed #3b82f6;
+  background: rgba(59, 130, 246, 0.18);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4), inset 0 0 15px rgba(59, 130, 246, 0.2);
+  transition: top 0.03s ease-out, left 0.03s ease-out, width 0.03s ease-out, height 0.03s ease-out;
+  border-radius: 4px;
+}
+
+#snapblock-inspector-badge {
+  position: absolute;
+  left: 0;
+  top: -28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 6px;
+  color: #f8fafc;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.snapblock-badge-tag {
+  color: #60a5fa;
+}
+
+.snapblock-badge-dim {
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+/* --------------------------------------------------------------------------
+   2. RECTANGLE AREA SELECT OVERLAY
+   -------------------------------------------------------------------------- */
+#snapblock-area-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 2147483641;
+  cursor: crosshair;
+}
+
+#snapblock-area-box {
+  position: absolute;
+  border: 2px solid #06b6d4;
+  background: rgba(6, 182, 212, 0.08);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
+  box-sizing: border-box;
+}
+
+.snapblock-area-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border: 2px solid #06b6d4;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.snapblock-handle-tl { top: -5px; left: -5px; cursor: nwse-resize; }
+.snapblock-handle-tc { top: -5px; left: calc(50% - 5px); cursor: ns-resize; }
+.snapblock-handle-tr { top: -5px; right: -5px; cursor: nesw-resize; }
+.snapblock-handle-cl { top: calc(50% - 5px); left: -5px; cursor: ew-resize; }
+.snapblock-handle-cr { top: calc(50% - 5px); right: -5px; cursor: ew-resize; }
+.snapblock-handle-bl { bottom: -5px; left: -5px; cursor: nesw-resize; }
+.snapblock-handle-bc { bottom: -5px; left: calc(50% - 5px); cursor: ns-resize; }
+.snapblock-handle-br { bottom: -5px; right: -5px; cursor: nwse-resize; }
+
+#snapblock-area-badge {
+  position: absolute;
+  top: -26px;
+  left: 0;
+  background: rgba(15, 23, 42, 0.9);
+  color: #06b6d4;
+  font-size: 11px;
+  font-family: monospace;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
+#snapblock-area-toolbar {
+  position: absolute;
+  bottom: -44px;
+  right: 0;
+  display: flex;
+  gap: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   3. FREEHAND LASSO OVERLAY
+   -------------------------------------------------------------------------- */
+#snapblock-freehand-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483642;
+  cursor: crosshair;
+}
+
+#snapblock-freehand-canvas {
+  display: block;
+}
+
+#snapblock-freehand-badge {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.9);
+  color: #f8fafc;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   4. INJECTED FLOATING TOOLBAR
+   -------------------------------------------------------------------------- */
+#snapblock-floating-bar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483645;
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  padding: 6px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(99, 102, 241, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#snapblock-bar-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 20px;
+  user-select: none;
+}
+
+.snapblock-bar-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+}
+
+.snapblock-bar-title {
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.snapblock-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.snapblock-floating-minimized .snapblock-bar-actions {
+  display: none;
+}
+
+.snapblock-bar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.snapblock-bar-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.snapblock-bar-btn .snapblock-icon {
+  font-size: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   5. PREVIEW MODAL
+   -------------------------------------------------------------------------- */
+#snapblock-preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.snapblock-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+}
+
+.snapblock-modal-card {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  max-height: 85vh;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(99, 102, 241, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: snapblockPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes snapblockPopIn {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.snapblock-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.snapblock-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f8fafc;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.snapblock-modal-body {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+}
+
+.snapblock-img-wrapper {
+  max-width: 100%;
+  max-height: 55vh;
+  overflow: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.snapblock-img-wrapper img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.snapblock-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.snapblock-modal-info {
+  color: #94a3b8;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.snapblock-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   6. BUTTONS & TOASTS
+   -------------------------------------------------------------------------- */
+.snapblock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.snapblock-btn-primary {
+  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
+
+.snapblock-btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.5);
+}
+
+.snapblock-btn-secondary {
+  background: rgba(51, 65, 85, 0.8);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.snapblock-btn-secondary:hover {
+  background: rgba(71, 85, 105, 0.9);
+  transform: translateY(-1px);
+}
+
+.snapblock-icon-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.snapblock-icon-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Toast System */
+#snapblock-toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 2147483647;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.snapblock-toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.snapblock-toast-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.snapblock-toast-success .snapblock-toast-icon { color: #10b981; }
+.snapblock-toast-error .snapblock-toast-icon { color: #ef4444; }
+.snapblock-toast-info .snapblock-toast-icon { color: #3b82f6; }

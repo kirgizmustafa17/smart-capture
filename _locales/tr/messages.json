@@ -1,0 +1,106 @@
+{
+  "appName": {
+    "message": "SmartCapture - Blok & Ekran Görüntüsü",
+    "description": "Eklenti adı"
+  },
+  "appDesc": {
+    "message": "Web sayfalarındaki blokları, elemanları, dörtgen ve serbest alanları kolayca kırpıp ekran görüntüsü alın.",
+    "description": "Eklenti açıklaması"
+  },
+  "modeBlock": {
+    "message": "Blok / Öğe Seçimi",
+    "description": "Blok öğe seçimi modu başlığı"
+  },
+  "modeBlockDesc": {
+    "message": "Sayfadaki grafik, başlık, kart veya alanların üzerine gelerek tek tıkla yakalayın.",
+    "description": "Blok mod açıklaması"
+  },
+  "modeArea": {
+    "message": "Dörtgen Alan",
+    "description": "Dörtgen alan modu"
+  },
+  "modeAreaDesc": {
+    "message": "Fare ile sürükleyerek istediğiniz dikdörtgen bölgeyi seçin ve kırpın.",
+    "description": "Dörtgen alan mod açıklaması"
+  },
+  "modeFreehand": {
+    "message": "Serbest Çizim",
+    "description": "Serbest çizim lassosu"
+  },
+  "modeFreehandDesc": {
+    "message": "Çizim yaparak dilediğiniz özel şekilli bölgeyi kırpın.",
+    "description": "Serbest çizim mod açıklaması"
+  },
+  "modeVisible": {
+    "message": "Görünen Bölge",
+    "description": "Görünen ekran görüntüsü"
+  },
+  "modeVisibleDesc": {
+    "message": "Ekranınızda anlık görünen kısmın yüksek çözünürlüklü görüntüsünü alın.",
+    "description": "Görünen alan açıklaması"
+  },
+  "modeFullPage": {
+    "message": "Tüm Sayfa",
+    "description": "Tüm sayfa modu"
+  },
+  "modeFullPageDesc": {
+    "message": "Sayfayı otomatik kaydırarak baştan sona tüm içeriği yakalayın.",
+    "description": "Tüm sayfa açıklaması"
+  },
+  "btnCopy": {
+    "message": "Panoya Kopyala",
+    "description": "Panoya kopyalama butonu"
+  },
+  "btnDownload": {
+    "message": "Resmi İndir",
+    "description": "İndirme butonu"
+  },
+  "btnClose": {
+    "message": "Kapat",
+    "description": "Kapat butonu"
+  },
+  "btnConfirm": {
+    "message": "Yakala",
+    "description": "Yakala/Onayla"
+  },
+  "btnCancel": {
+    "message": "İptal (ESC)",
+    "description": "İptal et"
+  },
+  "copiedSuccess": {
+    "message": "Ekran görüntüsü panoya kopyalandı!",
+    "description": "Panoya kopyalandı bildirimi"
+  },
+  "downloadSuccess": {
+    "message": "Ekran görüntüsü indiriliyor...",
+    "description": "İndirme bildirimi"
+  },
+  "activeModeNotice": {
+    "message": "Seçim modu aktif! İptal etmek için ESC tuşuna basın.",
+    "description": "Mod aktif bildirimi"
+  },
+  "previewTitle": {
+    "message": "Ekran Görüntüsü Önizleme",
+    "description": "Önizleme başlığı"
+  },
+  "dimensionsLabel": {
+    "message": "Boyut",
+    "description": "Boyut etiketi"
+  },
+  "floatingToolbarTitle": {
+    "message": "SmartCapture Çubuğu",
+    "description": "Yüzen araç çubuğu başlığı"
+  },
+  "settingAutoCopy": {
+    "message": "Otomatik Panoya Kopyala",
+    "description": "Ayar anahtarı"
+  },
+  "settingAutoDownload": {
+    "message": "Otomatik İndir",
+    "description": "Ayar anahtarı"
+  },
+  "restrictedPageNotice": {
+    "message": "Chrome güvenlik kısıtlaması nedeniyle bu sistem sayfasında ekran görüntüsü alınamaz.",
+    "description": "Sistem sayfası uyarısı"
+  }
+}

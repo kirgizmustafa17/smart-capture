@@ -1,0 +1,106 @@
+{
+  "appName": {
+    "message": "SmartCapture - Element & Screenshot",
+    "description": "Extension title"
+  },
+  "appDesc": {
+    "message": "Capture DOM element blocks, custom rectangles, freehand shapes, visible tab or full web pages with ease.",
+    "description": "Extension description"
+  },
+  "modeBlock": {
+    "message": "Element / Block Selector",
+    "description": "Block selector mode title"
+  },
+  "modeBlockDesc": {
+    "message": "Hover over charts, headers, cards or elements to capture them with one click.",
+    "description": "Block mode description"
+  },
+  "modeArea": {
+    "message": "Rectangle Area",
+    "description": "Rectangle area mode"
+  },
+  "modeAreaDesc": {
+    "message": "Drag to select any rectangular region on your screen to crop.",
+    "description": "Rectangle area mode description"
+  },
+  "modeFreehand": {
+    "message": "Freehand Lasso",
+    "description": "Freehand lasso capture"
+  },
+  "modeFreehandDesc": {
+    "message": "Draw custom shapes to crop precisely what you need.",
+    "description": "Freehand lasso description"
+  },
+  "modeVisible": {
+    "message": "Visible Viewport",
+    "description": "Visible area screenshot"
+  },
+  "modeVisibleDesc": {
+    "message": "Capture the currently visible portion of your browser screen.",
+    "description": "Visible area description"
+  },
+  "modeFullPage": {
+    "message": "Full Page",
+    "description": "Full page mode"
+  },
+  "modeFullPageDesc": {
+    "message": "Automatically scroll and capture the entire webpage from top to bottom.",
+    "description": "Full page description"
+  },
+  "btnCopy": {
+    "message": "Copy to Clipboard",
+    "description": "Copy button text"
+  },
+  "btnDownload": {
+    "message": "Download Image",
+    "description": "Download button text"
+  },
+  "btnClose": {
+    "message": "Close",
+    "description": "Close button text"
+  },
+  "btnConfirm": {
+    "message": "Capture",
+    "description": "Confirm capture button"
+  },
+  "btnCancel": {
+    "message": "Cancel (ESC)",
+    "description": "Cancel button"
+  },
+  "copiedSuccess": {
+    "message": "Screenshot copied to clipboard!",
+    "description": "Copied notification"
+  },
+  "downloadSuccess": {
+    "message": "Downloading screenshot...",
+    "description": "Download notification"
+  },
+  "activeModeNotice": {
+    "message": "Selection mode active! Press ESC to exit.",
+    "description": "Active mode notice"
+  },
+  "previewTitle": {
+    "message": "Screenshot Preview",
+    "description": "Preview modal title"
+  },
+  "dimensionsLabel": {
+    "message": "Dimensions",
+    "description": "Dimensions label"
+  },
+  "floatingToolbarTitle": {
+    "message": "SmartCapture Bar",
+    "description": "Floating toolbar title"
+  },
+  "settingAutoCopy": {
+    "message": "Auto-copy to Clipboard",
+    "description": "Setting toggle"
+  },
+  "settingAutoDownload": {
+    "message": "Auto Download",
+    "description": "Setting toggle"
+  },
+  "restrictedPageNotice": {
+    "message": "Due to Chrome security policies, screenshots cannot be captured on this internal page.",
+    "description": "Restricted page notification"
+  }
+}

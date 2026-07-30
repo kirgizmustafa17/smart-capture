@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartCapture</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="brand">
+        <img src="../icons/icon48.png" alt="SmartCapture Logo" class="brand-logo">
+        <div class="brand-info">
+          <h1 id="app-title" data-i18n="appName">SmartCapture</h1>
+          <p id="app-subtitle" data-i18n="appDesc">Blok & Ekran Görüntüsü</p>
+        </div>
+      </div>
+      <span class="badge-pro">PRO</span>
+    </header>
+
+    <!-- Main Mode Selection Grid -->
+    <section class="mode-section">
+      <!-- Featured Block Selector -->
+      <div class="mode-card featured" data-mode="BLOCK">
+        <div class="mode-icon">🎯</div>
+        <div class="mode-content">
+          <div class="mode-header">
+            <h3 data-i18n="modeBlock">Blok / Öğe Seçimi</h3>
+            <span class="tag-star">★ ÖNERİLEN</span>
+          </div>
+          <p data-i18n="modeBlockDesc">Grafik, başlık veya herhangi bir web bloğunu üzerine gelerek yakalayın.</p>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- Grid for Other Modes -->
+      <div class="mode-grid">
+        <div class="mode-card" data-mode="AREA">
+          <div class="mode-icon">📐</div>
+          <div class="mode-content">
+            <h3 data-i18n="modeArea">Dörtgen Alan</h3>
+            <p data-i18n="modeAreaDesc">Sürükleyerek alan seçin.</p>
+          </div>
+        </div>
+
+        <div class="mode-card" data-mode="FREEHAND">
+          <div class="mode-icon">✏️</div>
+          <div class="mode-content">
+            <h3 data-i18n="modeFreehand">Serbest Çizim</h3>
+            <p data-i18n="modeFreehandDesc">Lasso ile özel şekil kırpın.</p>
+          </div>
+        </div>
+
+        <div class="mode-card" data-mode="VISIBLE">
+          <div class="mode-icon">👁️</div>
+          <div class="mode-content">
+            <h3 data-i18n="modeVisible">Görünen Bölge</h3>
+            <p data-i18n="modeVisibleDesc">Ekrandaki kısmı yakalayın.</p>
+          </div>
+        </div>
+
+        <div class="mode-card" data-mode="FULLPAGE">
+          <div class="mode-icon">📜</div>
+          <div class="mode-content">
+            <h3 data-i18n="modeFullPage">Tüm Sayfa</h3>
+            <p data-i18n="modeFullPageDesc">Tüm sayfayı kaydırıp birleştirin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Settings Section -->
+    <section class="settings-section">
+      <div class="setting-item">
+        <span class="setting-label" data-i18n="settingAutoCopy">Otomatik Panoya Kopyala</span>
+        <label class="switch">
+          <input type="checkbox" id="toggle-autocopy">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <span class="setting-label" data-i18n="settingAutoDownload">Otomatik İndir</span>
+        <label class="switch">
+          <input type="checkbox" id="toggle-autodownload">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <span>v1.0.0 • Manifest V3</span>
+      <span class="status-indicator">● Hazır</span>
+    </footer>
+  </div>
+
+  <script src="../lib/utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
