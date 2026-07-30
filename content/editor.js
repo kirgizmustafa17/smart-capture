@@ -18,7 +18,7 @@ window.SmartEditor = (function () {
 
   function initEditor(canvasElement, imageSrc, onUpdatedCallback) {
     activeCanvas = canvasElement;
-    activeCtx = activeCanvas.getContext('2d');
+    activeCtx = activeCanvas.getContext('2d', { willReadFrequently: true });
     annotationsHistory.length = 0;
 
     const img = new Image();
@@ -205,7 +205,7 @@ window.SmartEditor = (function () {
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = bw;
     tempCanvas.height = bh;
-    const tempCtx = tempCanvas.getContext('2d');
+    const tempCtx = tempCanvas.getContext('2d', { willReadFrequently: true });
 
     // Draw target region to temp canvas
     tempCtx.drawImage(activeCanvas, bx, by, bw, bh, 0, 0, bw, bh);
