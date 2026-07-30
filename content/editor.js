@@ -132,6 +132,8 @@ window.SmartEditor = (function () {
       activeCtx.strokeStyle = currentColor;
       activeCtx.lineWidth = 4;
       activeCtx.strokeRect(x1, y1, x2 - x1, y2 - y1);
+    } else if (currentTool === 'mosaic') {
+      applyMosaic(x1, y1, x2 - x1, y2 - y1);
     } else if (currentTool === 'blur') {
       applyBlur(x1, y1, x2 - x1, y2 - y1);
     }
@@ -162,7 +164,10 @@ window.SmartEditor = (function () {
     ctx.fill();
   }
 
-  function applyBlur(x, y, w, h) {
+  /**
+   * Pixelate / Block Mosaic Filter
+   */
+  function applyMosaic(x, y, w, h) {
     const bx = Math.min(x, x + w);
     const by = Math.min(y, y + h);
     const bw = Math.abs(w);
@@ -170,7 +175,6 @@ window.SmartEditor = (function () {
 
     if (bw <= 0 || bh <= 0) return;
 
-    // Pixelate / Blur block algorithm
     const sampleSize = 12;
     const imgData = activeCtx.getImageData(bx, by, bw, bh);
 
@@ -185,6 +189,32 @@ window.SmartEditor = (function () {
         activeCtx.fillRect(bx + px, by + py, sampleSize, sampleSize);
       }
     }
+  }
+
+  /**
+   * Soft Gaussian Blur Filter
+   */
+  function applyBlur(x, y, w, h) {
+    const bx = Math.min(x, x + w);
+    const by = Math.min(y, y + h);
+    const bw = Math.abs(w);
+    const bh = Math.abs(h);
+
+    if (bw <= 0 || bh <= 0) return;
+
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = bw;
+    tempCanvas.height = bh;
+    const tempCtx = tempCanvas.getContext('2d');
+
+    // Draw target region to temp canvas
+    tempCtx.drawImage(activeCanvas, bx, by, bw, bh, 0, 0, bw, bh);
+
+    // Apply soft blur effect
+    activeCtx.save();
+    activeCtx.filter = 'blur(8px)';
+    activeCtx.drawImage(tempCanvas, bx, by, bw, bh);
+    activeCtx.restore();
   }
 
   function getEditedDataURL(format = 'image/png', quality = 0.92) {
