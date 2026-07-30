@@ -251,12 +251,10 @@ window.SmartContentController = (function () {
   }
 
   /**
-   * Render Preview Modal with image, specs, and actions
+   * Render Preview Modal with SmartEditor PRO Canvas Annotation tools
    */
   function showPreviewModal(dataUrl) {
     if (previewModalEl) previewModalEl.remove();
-
-    const blob = SmartUtils.dataURLToBlob(dataUrl);
 
     previewModalEl = document.createElement('div');
     previewModalEl.id = 'snapblock-preview-modal';
@@ -269,13 +267,33 @@ window.SmartContentController = (function () {
           <div class="snapblock-modal-title">
             <span class="snapblock-modal-icon">📷</span>
             <span>${SmartUtils.t('previewTitle', 'Ekran Görüntüsü Önizleme')}</span>
+            <span class="badge-pro" style="margin-left:8px; font-size:9px; background:linear-gradient(135deg,#4f46e5,#06b6d4); color:#fff; padding:2px 6px; border-radius:10px; font-weight:800;">PRO BETA</span>
           </div>
+
+          <!-- PRO Annotation Toolbar -->
+          <div class="snapblock-editor-toolbar">
+            <button class="snapblock-tool-btn active" data-tool="select" title="Seç / Görseli Taşı">🔍</button>
+            <button class="snapblock-tool-btn" data-tool="arrow" title="Ok Çiz">↗️ Ok</button>
+            <button class="snapblock-tool-btn" data-tool="rect" title="Kutu Çiz">⬛ Kutu</button>
+            <button class="snapblock-tool-btn" data-tool="blur" title="Hassas Bilgi Sansürle">💧 Blur</button>
+            <button class="snapblock-tool-btn" data-tool="text" title="Metin Ekle">🔤 Yazı</button>
+            <button class="snapblock-tool-btn" id="snapblock-tool-undo" title="Geri Al">↩️</button>
+
+            <div class="snapblock-color-picker">
+              <div class="snapblock-color-dot active" data-color="#ef4444" style="background:#ef4444;"></div>
+              <div class="snapblock-color-dot" data-color="#f59e0b" style="background:#f59e0b;"></div>
+              <div class="snapblock-color-dot" data-color="#06b6d4" style="background:#06b6d4;"></div>
+              <div class="snapblock-color-dot" data-color="#10b981" style="background:#10b981;"></div>
+              <div class="snapblock-color-dot" data-color="#ffffff" style="background:#ffffff;"></div>
+            </div>
+          </div>
+
           <button id="snapblock-modal-close" class="snapblock-icon-btn">✕</button>
         </div>
 
         <div class="snapblock-modal-body">
           <div class="snapblock-img-wrapper">
-            <img src="${dataUrl}" alt="Captured Screenshot" id="snapblock-preview-img" />
+            <canvas id="snapblock-editor-canvas"></canvas>
           </div>
         </div>
 
@@ -285,6 +303,12 @@ window.SmartContentController = (function () {
           </div>
 
           <div class="snapblock-modal-actions">
+            <select id="snapblock-export-format" class="snapblock-format-select">
+              <option value="image/png">PNG Görsel</option>
+              <option value="image/jpeg">JPEG Görsel</option>
+              <option value="image/webp">WebP Görsel</option>
+            </select>
+
             <button id="snapblock-btn-copy" class="snapblock-btn snapblock-btn-primary">
               <span>📋</span> ${SmartUtils.t('btnCopy', 'Panoya Kopyala')}
             </button>
@@ -298,12 +322,40 @@ window.SmartContentController = (function () {
 
     document.body.appendChild(previewModalEl);
 
-    // Calculate dimensions
-    const imgEl = previewModalEl.querySelector('#snapblock-preview-img');
-    imgEl.onload = () => {
+    // Initialize PRO Editor Canvas
+    const canvasEl = previewModalEl.querySelector('#snapblock-editor-canvas');
+    if (window.SmartEditor) {
+      SmartEditor.initEditor(canvasEl, dataUrl);
+    }
+
+    // Update Dimensions info
+    const imgTemp = new Image();
+    imgTemp.onload = () => {
       const dimInfo = previewModalEl.querySelector('#snapblock-img-dims');
-      dimInfo.textContent = `${SmartUtils.t('dimensionsLabel', 'Boyut')}: ${imgEl.naturalWidth} × ${imgEl.naturalHeight} px`;
+      dimInfo.textContent = `${SmartUtils.t('dimensionsLabel', 'Boyut')}: ${imgTemp.width} × ${imgTemp.height} px`;
     };
+    imgTemp.src = dataUrl;
+
+    // Attach Editor Toolbar Events
+    previewModalEl.querySelectorAll('.snapblock-tool-btn[data-tool]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        previewModalEl.querySelectorAll('.snapblock-tool-btn[data-tool]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (window.SmartEditor) SmartEditor.setTool(btn.dataset.tool);
+      });
+    });
+
+    previewModalEl.querySelector('#snapblock-tool-undo')?.addEventListener('click', () => {
+      if (window.SmartEditor) SmartEditor.undo();
+    });
+
+    previewModalEl.querySelectorAll('.snapblock-color-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        previewModalEl.querySelectorAll('.snapblock-color-dot').forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        if (window.SmartEditor) SmartEditor.setColor(dot.dataset.color);
+      });
+    });
 
     // Close handlers
     const closeBtn = previewModalEl.querySelector('#snapblock-modal-close');
@@ -311,9 +363,15 @@ window.SmartContentController = (function () {
     closeBtn.addEventListener('click', () => previewModalEl.remove());
     backdrop.addEventListener('click', () => previewModalEl.remove());
 
-    // Action handlers
+    // Action handlers (Copy & Download with format options)
+    const formatSelect = previewModalEl.querySelector('#snapblock-export-format');
+
     const copyBtn = previewModalEl.querySelector('#snapblock-btn-copy');
     copyBtn.addEventListener('click', async () => {
+      const format = formatSelect.value;
+      const editedUrl = window.SmartEditor ? SmartEditor.getEditedDataURL(format) : dataUrl;
+      const blob = SmartUtils.dataURLToBlob(editedUrl);
+
       const success = await SmartUtils.copyBlobToClipboard(blob);
       if (success) {
         SmartUtils.showToast(SmartUtils.t('copiedSuccess', 'Panoya kopyalandı!'), 'success');
@@ -324,7 +382,12 @@ window.SmartContentController = (function () {
 
     const downloadBtn = previewModalEl.querySelector('#snapblock-btn-download');
     downloadBtn.addEventListener('click', () => {
-      const filename = `smartcapture_${new Date().toISOString().slice(0, 10)}_${Date.now().toString().slice(-4)}.png`;
+      const format = formatSelect.value;
+      const editedUrl = window.SmartEditor ? SmartEditor.getEditedDataURL(format) : dataUrl;
+      const blob = SmartUtils.dataURLToBlob(editedUrl);
+
+      const ext = format === 'image/jpeg' ? 'jpg' : format === 'image/webp' ? 'webp' : 'png';
+      const filename = `smartcapture_pro_${new Date().toISOString().slice(0, 10)}_${Date.now().toString().slice(-4)}.${ext}`;
       SmartUtils.downloadBlob(blob, filename);
       SmartUtils.showToast(SmartUtils.t('downloadSuccess', 'İndiriliyor...'), 'success');
     });

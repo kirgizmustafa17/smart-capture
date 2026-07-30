@@ -13,7 +13,7 @@ function createContextMenus() {
     // Main parent menu
     chrome.contextMenus.create({
       id: 'smartcapture_parent',
-      title: 'SmartCapture - Ekran Görüntüsü',
+      title: 'SmartCapture Beta PRO',
       contexts: ['all']
     });
 
@@ -89,6 +89,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
           'content/area-select.js',
           'content/freehand-select.js',
           'content/full-page.js',
+          'content/editor.js',
           'content/content.js'
         ]
       }).then(() => {

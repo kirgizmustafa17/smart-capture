@@ -86,6 +86,7 @@ function initModeSelection() {
               'content/area-select.js',
               'content/freehand-select.js',
               'content/full-page.js',
+              'content/editor.js',
               'content/content.js'
             ]
           }).then(() => {
