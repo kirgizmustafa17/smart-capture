@@ -102,5 +102,73 @@
   "restrictedPageNotice": {
     "message": "Due to Chrome security policies, screenshots cannot be captured on this internal page.",
     "description": "Restricted page notification"
+  },
+  "toolSelect": {
+    "message": "Select & Move",
+    "description": "Select tool"
+  },
+  "toolPen": {
+    "message": "Pen",
+    "description": "Freehand pen tool"
+  },
+  "toolArrow": {
+    "message": "Arrow",
+    "description": "Arrow tool"
+  },
+  "toolRect": {
+    "message": "Rectangle",
+    "description": "Rectangle tool"
+  },
+  "toolCircle": {
+    "message": "Circle",
+    "description": "Circle tool"
+  },
+  "toolHighlighter": {
+    "message": "Highlighter",
+    "description": "Highlighter tool"
+  },
+  "toolMosaic": {
+    "message": "Mosaic",
+    "description": "Pixelate mosaic tool"
+  },
+  "toolBlur": {
+    "message": "Blur",
+    "description": "Soft blur tool"
+  },
+  "toolText": {
+    "message": "Text",
+    "description": "Text annotation tool"
+  },
+  "toolStep": {
+    "message": "Step Badge",
+    "description": "Numbered step callout tool"
+  },
+  "toolCrop": {
+    "message": "Crop",
+    "description": "Crop canvas tool"
+  },
+  "toolUndo": {
+    "message": "Undo",
+    "description": "Undo tool"
+  },
+  "toolRedo": {
+    "message": "Redo",
+    "description": "Redo tool"
+  },
+  "toolReset": {
+    "message": "Reset",
+    "description": "Reset canvas tool"
+  },
+  "zoomIn": {
+    "message": "Zoom In",
+    "description": "Zoom in"
+  },
+  "zoomOut": {
+    "message": "Zoom Out",
+    "description": "Zoom out"
+  },
+  "zoomFit": {
+    "message": "Fit",
+    "description": "Fit to view"
   }
 }

@@ -13,7 +13,7 @@ function createContextMenus() {
     // Main parent menu
     chrome.contextMenus.create({
       id: 'smartcapture_parent',
-      title: 'SmartCapture Beta PRO',
+      title: 'SmartCapture PRO',
       contexts: ['all']
     });
 
@@ -21,35 +21,35 @@ function createContextMenus() {
     chrome.contextMenus.create({
       parentId: 'smartcapture_parent',
       id: 'mode_BLOCK',
-      title: '🎯 Blok / Öğe Seçimi',
+      title: 'Blok / Öğe Seçimi (Element)',
       contexts: ['all']
     });
 
     chrome.contextMenus.create({
       parentId: 'smartcapture_parent',
       id: 'mode_AREA',
-      title: '📐 Dörtgen Alan Seçimi',
+      title: 'Dörtgen Alan Seçimi (Rectangle)',
       contexts: ['all']
     });
 
     chrome.contextMenus.create({
       parentId: 'smartcapture_parent',
       id: 'mode_FREEHAND',
-      title: '✏️ Serbest Çizim (Lasso)',
+      title: 'Serbest Çizim (Freehand Lasso)',
       contexts: ['all']
     });
 
     chrome.contextMenus.create({
       parentId: 'smartcapture_parent',
       id: 'mode_VISIBLE',
-      title: '👁️ Görünen Bölgeyi Yakala',
+      title: 'Görünen Bölgeyi Yakala (Visible)',
       contexts: ['all']
     });
 
     chrome.contextMenus.create({
       parentId: 'smartcapture_parent',
       id: 'mode_FULLPAGE',
-      title: '📜 Tüm Sayfayı Yakala',
+      title: 'Tüm Sayfayı Yakala (Full Page)',
       contexts: ['all']
     });
   });
@@ -109,10 +109,15 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 // Handle screenshot capture messages from content scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'OPEN_EDITOR') {
-    chrome.storage.local.set({ pendingScreenshot: message.dataUrl }, () => {
+    if (message.dataUrl) {
+      chrome.storage.local.set({ pendingScreenshot: message.dataUrl }, () => {
+        chrome.tabs.create({ url: chrome.runtime.getURL('editor/editor.html') });
+        sendResponse({ success: true });
+      });
+    } else {
       chrome.tabs.create({ url: chrome.runtime.getURL('editor/editor.html') });
       sendResponse({ success: true });
-    });
+    }
     return true;
   }
 

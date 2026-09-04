@@ -268,30 +268,58 @@ window.SmartContentController = (function () {
       <div class="snapblock-modal-card">
         <div class="snapblock-modal-header">
           <div class="snapblock-modal-title">
-            <span class="snapblock-modal-icon">📷</span>
+            <span class="snapblock-modal-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+            </span>
             <span>${SmartUtils.t('previewTitle', 'Ekran Görüntüsü Önizleme')}</span>
-            <span class="badge-pro" style="margin-left:8px; font-size:9px; background:linear-gradient(135deg,#4f46e5,#06b6d4); color:#fff; padding:2px 6px; border-radius:10px; font-weight:800;">PRO BETA</span>
+            <span class="badge-pro" style="margin-left:8px; font-size:9px; background:rgba(6,182,212,0.15); color:#67e8f9; border:1px solid rgba(6,182,212,0.3); padding:1px 5px; border-radius:4px; font-weight:700;">PRO</span>
           </div>
 
           <!-- PRO Annotation Toolbar -->
           <div class="snapblock-editor-toolbar">
-            <button class="snapblock-tool-btn active" data-tool="select" title="Seç / Görseli Taşı">🔍</button>
-            <button class="snapblock-tool-btn" data-tool="arrow" title="Ok Çiz">↗️ Ok</button>
-            <button class="snapblock-tool-btn" data-tool="rect" title="Kutu Çiz">⬛ Kutu</button>
-            <button class="snapblock-tool-btn" data-tool="blur" title="Hassas Bilgi Sansürle">💧 Blur</button>
-            <button class="snapblock-tool-btn" data-tool="text" title="Metin Ekle">🔤 Yazı</button>
-            <button class="snapblock-tool-btn" id="snapblock-tool-undo" title="Geri Al">↩️</button>
+            <button class="snapblock-tool-btn active" data-tool="select" title="Seç (V)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 7 18 3-7 7-3L3 3z"/></svg>
+            </button>
+            <button class="snapblock-tool-btn" data-tool="pen" title="Kalem (P)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+            </button>
+            <button class="snapblock-tool-btn" data-tool="arrow" title="Ok (A)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="9 5 19 5 19 15"/></svg>
+            </button>
+            <button class="snapblock-tool-btn" data-tool="rect" title="Kutu (R)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+            </button>
+            <button class="snapblock-tool-btn" data-tool="circle" title="Daire (O)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>
+            </button>
+            <button class="snapblock-tool-btn" data-tool="blur" title="Blur (B)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </button>
+            <button class="snapblock-tool-btn" data-tool="text" title="Yazı (T)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+            </button>
+            <button class="snapblock-tool-btn" data-tool="step" title="Adım (N)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8"/></svg>
+            </button>
+            <button class="snapblock-tool-btn" id="snapblock-tool-undo" title="Geri Al (Ctrl+Z)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+            </button>
 
             <div class="snapblock-color-picker">
               <div class="snapblock-color-dot active" data-color="#ef4444" style="background:#ef4444;"></div>
               <div class="snapblock-color-dot" data-color="#f59e0b" style="background:#f59e0b;"></div>
-              <div class="snapblock-color-dot" data-color="#06b6d4" style="background:#06b6d4;"></div>
               <div class="snapblock-color-dot" data-color="#10b981" style="background:#10b981;"></div>
+              <div class="snapblock-color-dot" data-color="#0ea5e9" style="background:#0ea5e9;"></div>
               <div class="snapblock-color-dot" data-color="#ffffff" style="background:#ffffff;"></div>
             </div>
           </div>
 
-          <button id="snapblock-modal-close" class="snapblock-icon-btn">✕</button>
+          <button id="snapblock-modal-close" class="snapblock-icon-btn" title="Kapat (Esc)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
         </div>
 
         <div class="snapblock-modal-body">
@@ -307,16 +335,18 @@ window.SmartContentController = (function () {
 
           <div class="snapblock-modal-actions">
             <select id="snapblock-export-format" class="snapblock-format-select">
-              <option value="image/png">PNG Görsel</option>
-              <option value="image/jpeg">JPEG Görsel</option>
-              <option value="image/webp">WebP Görsel</option>
+              <option value="image/png">PNG Formatı</option>
+              <option value="image/jpeg">JPEG Formatı</option>
+              <option value="image/webp">WebP Formatı</option>
             </select>
 
-            <button id="snapblock-btn-copy" class="snapblock-btn snapblock-btn-primary">
-              <span>📋</span> ${SmartUtils.t('btnCopy', 'Panoya Kopyala')}
+            <button id="snapblock-btn-copy" class="snapblock-btn snapblock-btn-primary" title="Panoya Kopyala (Ctrl+C)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>${SmartUtils.t('btnCopy', 'Panoya Kopyala')}</span>
             </button>
-            <button id="snapblock-btn-download" class="snapblock-btn snapblock-btn-secondary">
-              <span>💾</span> ${SmartUtils.t('btnDownload', 'İndir')}
+            <button id="snapblock-btn-download" class="snapblock-btn snapblock-btn-secondary" title="İndir (Ctrl+S)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>${SmartUtils.t('btnDownload', 'İndir')}</span>
             </button>
           </div>
         </div>

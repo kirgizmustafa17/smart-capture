@@ -102,5 +102,73 @@
   "restrictedPageNotice": {
     "message": "Chrome güvenlik kısıtlaması nedeniyle bu sistem sayfasında ekran görüntüsü alınamaz.",
     "description": "Sistem sayfası uyarısı"
+  },
+  "toolSelect": {
+    "message": "Seç & Taşı",
+    "description": "Seçim aracı"
+  },
+  "toolPen": {
+    "message": "Kalem",
+    "description": "Serbest çizim aracı"
+  },
+  "toolArrow": {
+    "message": "Ok",
+    "description": "Ok aracı"
+  },
+  "toolRect": {
+    "message": "Kutu",
+    "description": "Dikdörtgen kutu aracı"
+  },
+  "toolCircle": {
+    "message": "Daire",
+    "description": "Daire aracı"
+  },
+  "toolHighlighter": {
+    "message": "Vurgu",
+    "description": "Vurgulayıcı fosforlu kalem"
+  },
+  "toolMosaic": {
+    "message": "Mozaik",
+    "description": "Pikselli mozaik sansürü"
+  },
+  "toolBlur": {
+    "message": "Blur",
+    "description": "Yumuşak gaussian blur"
+  },
+  "toolText": {
+    "message": "Metin",
+    "description": "Metin aracı"
+  },
+  "toolStep": {
+    "message": "Numara",
+    "description": "Numaralı adım işareti"
+  },
+  "toolCrop": {
+    "message": "Kırp",
+    "description": "Görsel kırpma aracı"
+  },
+  "toolUndo": {
+    "message": "Geri Al",
+    "description": "Geri al"
+  },
+  "toolRedo": {
+    "message": "Yinele",
+    "description": "Yinele"
+  },
+  "toolReset": {
+    "message": "Sıfırla",
+    "description": "Tuvali sıfırla"
+  },
+  "zoomIn": {
+    "message": "Yakınlaştır",
+    "description": "Yakınlaştırma"
+  },
+  "zoomOut": {
+    "message": "Uzaklaştır",
+    "description": "Uzaklaştırma"
+  },
+  "zoomFit": {
+    "message": "Sığdır",
+    "description": "Ekrana sığdır"
   }
 }

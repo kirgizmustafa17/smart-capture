@@ -48,10 +48,12 @@ window.SmartAreaSelect = (function () {
     toolbarEl.id = 'snapblock-area-toolbar';
     toolbarEl.innerHTML = `
       <button id="snapblock-area-confirm-btn" class="snapblock-btn snapblock-btn-primary">
-        <span>✓</span> ${SmartUtils.t('btnConfirm', 'Yakala')}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>${SmartUtils.t('btnConfirm', 'Yakala')}</span>
       </button>
       <button id="snapblock-area-cancel-btn" class="snapblock-btn snapblock-btn-secondary">
-        <span>✕</span> ${SmartUtils.t('btnCancel', 'İptal')}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span>${SmartUtils.t('btnCancel', 'İptal')}</span>
       </button>
     `;
     boxEl.appendChild(toolbarEl);

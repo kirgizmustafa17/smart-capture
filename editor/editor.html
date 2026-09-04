@@ -3,88 +3,291 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartCapture Beta PRO - Görsel Düzenleyici Stüdyosu</title>
+  <title>SmartCapture Studio - Pro Görsel Düzenleyici</title>
   <link rel="stylesheet" href="editor.css">
 </head>
 <body>
   <div class="editor-layout">
     <!-- Top Header Bar -->
     <header class="editor-header">
-      <div class="brand">
-        <img src="../icons/icon48.png" alt="Logo" class="brand-logo">
-        <div class="brand-title">
-          <h1>SmartCapture Studio <span class="badge-pro">PRO BETA</span></h1>
-          <p id="image-dimensions-info">Görsel Yükleniyor...</p>
+      <!-- Left Brand & Info -->
+      <div class="header-left">
+        <div class="brand">
+          <div class="brand-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title">
+              <h1>SmartCapture Studio</h1>
+              <span class="badge-pro">PRO</span>
+            </div>
+            <div class="meta-row">
+              <span id="image-dimensions-info" class="meta-dim">Yükleniyor...</span>
+              <span class="meta-separator">•</span>
+              <span id="canvas-zoom-info" class="meta-zoom">100%</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Center Tool Palette -->
-      <div class="toolbar-center">
-        <div class="tool-group">
-          <button class="tool-btn active" data-tool="select" title="Seç / Görseli Taşı">
-            <span>🔍</span> <span class="btn-label">Seç</span>
+      <div class="header-center">
+        <!-- Main Tool Group -->
+        <div class="tool-group" role="toolbar" aria-label="Çizim Araçları">
+          <button class="tool-btn active" data-tool="select" title="Seç & Taşı (V)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 3 7 18 3-7 7-3L3 3z"/>
+              <path d="m13 13 6 6"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolSelect">Seç</span>
           </button>
-          <button class="tool-btn" data-tool="arrow" title="Ok Çiz">
-            <span>↗️</span> <span class="btn-label">Ok</span>
+
+          <button class="tool-btn" data-tool="pen" title="Serbest Çizim Kalemi (P)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolPen">Kalem</span>
           </button>
-          <button class="tool-btn" data-tool="rect" title="Çerçeve Kutu Çiz">
-            <span>⬛</span> <span class="btn-label">Kutu</span>
+
+          <button class="tool-btn" data-tool="arrow" title="Ok Çiz (A)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="19" x2="19" y2="5"/>
+              <polyline points="9 5 19 5 19 15"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolArrow">Ok</span>
           </button>
-          <button class="tool-btn" data-tool="mosaic" title="Pikselli Mozaik Sansürü">
-            <span>🧩</span> <span class="btn-label">Mozaik</span>
+
+          <button class="tool-btn" data-tool="rect" title="Dikdörtgen Kutu (R)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolRect">Kutu</span>
           </button>
-          <button class="tool-btn" data-tool="blur" title="Hassas Yumuşak Blur Filtresi">
-            <span>💧</span> <span class="btn-label">Blur</span>
+
+          <button class="tool-btn" data-tool="circle" title="Daire / Elips (O)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolCircle">Daire</span>
           </button>
-          <button class="tool-btn" data-tool="text" title="Metin Ekle">
-            <span>🔤</span> <span class="btn-label">Yazı</span>
+
+          <button class="tool-btn" data-tool="highlighter" title="Vurgulayıcı Fosfor (H)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 11-6 6v3h3l6-6"/>
+              <path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolHighlighter">Vurgu</span>
           </button>
-          <button class="tool-btn" id="btn-undo" title="Son İşlemi Geri Al (Ctrl+Z)">
-            <span>↩️</span> <span class="btn-label">Geri Al</span>
+
+          <button class="tool-btn" data-tool="mosaic" title="Pikselli Mozaik Sansürü (M)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="7" x="3" y="3" rx="1"/>
+              <rect width="7" height="7" x="14" y="3" rx="1"/>
+              <rect width="7" height="7" x="14" y="14" rx="1"/>
+              <rect width="7" height="7" x="3" y="14" rx="1"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolMosaic">Mozaik</span>
+          </button>
+
+          <button class="tool-btn" data-tool="blur" title="Hassas Yumuşak Blur (B)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolBlur">Blur</span>
+          </button>
+
+          <button class="tool-btn" data-tool="text" title="Metin Ekle (T)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 7 4 4 20 4 20 7"/>
+              <line x1="9" y1="20" x2="15" y2="20"/>
+              <line x1="12" y1="4" x2="12" y2="20"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolText">Yazı</span>
+          </button>
+
+          <button class="tool-btn" data-tool="step" title="Numaralı Adım İşareti (N)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 8v8"/>
+              <path d="M10 10l2-2"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolStep">Adım</span>
+          </button>
+
+          <button class="tool-btn" data-tool="crop" title="Görseli Kırp (C)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2v14a2 2 0 0 0 2 2h14"/>
+              <path d="M18 22V8a2 2 0 0 0-2-2H2"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolCrop">Kırp</span>
           </button>
         </div>
 
-        <div class="divider"></div>
+        <div class="toolbar-divider"></div>
+
+        <!-- Stroke Width Control -->
+        <div class="stroke-group" aria-label="Çizgi Kalınlığı">
+          <button class="stroke-btn" data-stroke="2" title="İnce Çizgi (2px)">
+            <span class="stroke-preview fine"></span>
+          </button>
+          <button class="stroke-btn active" data-stroke="4" title="Orta Çizgi (4px)">
+            <span class="stroke-preview medium"></span>
+          </button>
+          <button class="stroke-btn" data-stroke="8" title="Kalın Çizgi (8px)">
+            <span class="stroke-preview thick"></span>
+          </button>
+        </div>
+
+        <div class="toolbar-divider"></div>
 
         <!-- Color Palette -->
-        <div class="color-palette">
-          <div class="color-dot active" data-color="#ef4444" style="background:#ef4444;" title="Kırmızı"></div>
-          <div class="color-dot" data-color="#f59e0b" style="background:#f59e0b;" title="Sarı"></div>
-          <div class="color-dot" data-color="#06b6d4" style="background:#06b6d4;" title="Cyan Mavi"></div>
-          <div class="color-dot" data-color="#10b981" style="background:#10b981;" title="Yeşil"></div>
-          <div class="color-dot" data-color="#ffffff" style="background:#ffffff;" title="Beyaz"></div>
-          <div class="color-dot" data-color="#090d16" style="background:#090d16; border:1px solid #475569;" title="Siyah"></div>
+        <div class="color-palette" role="radiogroup" aria-label="Renk Seçimi">
+          <button class="color-dot active" data-color="#ef4444" style="--swatch-color: #ef4444;" title="Kırmızı" aria-label="Kırmızı"></button>
+          <button class="color-dot" data-color="#f59e0b" style="--swatch-color: #f59e0b;" title="Sarı" aria-label="Sarı"></button>
+          <button class="color-dot" data-color="#10b981" style="--swatch-color: #10b981;" title="Yeşil" aria-label="Yeşil"></button>
+          <button class="color-dot" data-color="#0ea5e9" style="--swatch-color: #0ea5e9;" title="Mavi" aria-label="Mavi"></button>
+          <button class="color-dot" data-color="#8b5cf6" style="--swatch-color: #8b5cf6;" title="Mor" aria-label="Mor"></button>
+          <button class="color-dot" data-color="#ffffff" style="--swatch-color: #ffffff;" title="Beyaz" aria-label="Beyaz"></button>
+          <button class="color-dot dark-swatch" data-color="#0f172a" style="--swatch-color: #0f172a;" title="Siyah" aria-label="Siyah"></button>
+        </div>
+
+        <div class="toolbar-divider"></div>
+
+        <!-- Undo / Redo / Reset Group -->
+        <div class="history-group">
+          <button id="btn-undo" class="icon-action-btn" title="Geri Al (Ctrl+Z)" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7v6h6"/>
+              <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>
+            </svg>
+          </button>
+          <button id="btn-redo" class="icon-action-btn" title="Yinele (Ctrl+Y)" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 7v6h-6"/>
+              <path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/>
+            </svg>
+          </button>
+          <button id="btn-reset" class="icon-action-btn" title="Tüm Çizimleri Sıfırla">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"/>
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+            </svg>
+          </button>
         </div>
       </div>
 
       <!-- Right Action Export Controls -->
-      <div class="header-actions">
-        <select id="export-format" class="format-select">
-          <option value="image/png">PNG Formatı</option>
-          <option value="image/jpeg">JPEG Formatı</option>
-          <option value="image/webp">WebP Formatı</option>
+      <div class="header-right">
+        <!-- Zoom Controls -->
+        <div class="zoom-controls">
+          <button id="btn-zoom-out" class="icon-action-btn" title="Uzaklaştır (-)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+          </button>
+          <button id="btn-zoom-fit" class="zoom-text-btn" title="Ekrana Sığdır">
+            <span id="zoom-badge-text">100%</span>
+          </button>
+          <button id="btn-zoom-in" class="icon-action-btn" title="Yakınlaştır (+)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="11" y1="8" x2="11" y2="14"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="toolbar-divider"></div>
+
+        <select id="export-format" class="format-select" aria-label="Format Seçimi">
+          <option value="image/png">PNG Görsel</option>
+          <option value="image/jpeg">JPEG (Hafif)</option>
+          <option value="image/webp">WebP (Modern)</option>
         </select>
 
-        <button id="btn-copy" class="btn btn-primary">
-          <span>📋</span> Panoya Kopyala
+        <button id="btn-copy" class="btn btn-primary" title="Panoya Kopyala (Ctrl+C)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="13" height="13" x="9" y="9" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span data-i18n="btnCopy">Panoya Kopyala</span>
         </button>
-        <button id="btn-download" class="btn btn-secondary">
-          <span>💾</span> Resmi İndir
+
+        <button id="btn-download" class="btn btn-secondary" title="Resmi İndir (Ctrl+S)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span data-i18n="btnDownload">Resmi İndir</span>
         </button>
       </div>
     </header>
 
     <!-- Main Workspace Studio Canvas -->
-    <main class="editor-workspace">
-      <div class="canvas-container">
-        <canvas id="studio-canvas"></canvas>
+    <main class="editor-workspace" id="editor-workspace">
+      <div class="canvas-viewport" id="canvas-viewport">
+        <div class="canvas-wrapper" id="canvas-wrapper">
+          <canvas id="studio-canvas"></canvas>
+          <div id="crop-overlay-box" class="crop-box hidden">
+            <div class="crop-handle crop-handle-tl"></div>
+            <div class="crop-handle crop-handle-tr"></div>
+            <div class="crop-handle crop-handle-bl"></div>
+            <div class="crop-handle crop-handle-br"></div>
+            <div class="crop-hud-badge">
+              <span id="crop-dimensions">0 × 0 px</span>
+              <button id="btn-apply-crop" class="crop-hud-btn crop-confirm" title="Kırpmayı Uygula (Enter)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </button>
+              <button id="btn-cancel-crop" class="crop-hud-btn crop-cancel" title="Kırpmayı İptal Et (Esc)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <input type="text" id="canvas-inline-text-input" class="inline-text-input hidden" placeholder="Metin yazın..." />
+        </div>
       </div>
     </main>
 
-    <!-- Footer Bar -->
+    <!-- Footer Status Bar -->
     <footer class="editor-footer">
-      <span>SmartCapture PRO • Tam Ekran Düzenleyici</span>
-      <span id="shortcuts-info">Kısayollar: [Esc] Kapat • [Ctrl+Z] Geri Al • [Ctrl+C] Kopyala • [Ctrl+S] İndir</span>
+      <div class="footer-left">
+        <span class="status-indicator-ready"></span>
+        <span>SmartCapture PRO Studio</span>
+        <span class="footer-sep">|</span>
+        <span id="active-tool-indicator">Araç: Seç & Taşı (V)</span>
+      </div>
+      <div class="footer-center" id="shortcuts-info">
+        <span class="kbd-chip">V</span> Seç
+        <span class="kbd-chip">P</span> Kalem
+        <span class="kbd-chip">A</span> Ok
+        <span class="kbd-chip">R</span> Kutu
+        <span class="kbd-chip">O</span> Daire
+        <span class="kbd-chip">H</span> Vurgu
+        <span class="kbd-chip">M</span> Mozaik
+        <span class="kbd-chip">B</span> Blur
+        <span class="kbd-chip">T</span> Yazı
+        <span class="kbd-chip">N</span> Adım
+        <span class="kbd-chip">C</span> Kırp
+        <span class="kbd-chip">Ctrl+Z</span> Geri Al
+        <span class="kbd-chip">Ctrl+C</span> Kopyala
+      </div>
+      <div class="footer-right">
+        <span id="cursor-pos-info">X: 0 Y: 0</span>
+      </div>
     </footer>
   </div>
 

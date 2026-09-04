@@ -1,11 +1,11 @@
 /* ==========================================================================
-   SmartCapture - Modern Production CSS (Glassmorphism & High Tech Overlay)
+   SmartCapture - Impeccable Content Stylesheet (Overlay, HUD & Preview Modal)
    ========================================================================== */
 
 /* Isolation namespace to prevent target page CSS interference */
 .snapblock-ui-root {
   all: initial;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
@@ -24,40 +24,39 @@
   position: fixed;
   pointer-events: none;
   z-index: 2147483640;
-  border: 2px dashed #3b82f6;
-  background: rgba(59, 130, 246, 0.18);
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4), inset 0 0 15px rgba(59, 130, 246, 0.2);
-  transition: top 0.03s ease-out, left 0.03s ease-out, width 0.03s ease-out, height 0.03s ease-out;
+  border: 2px solid #6366f1;
+  background: rgba(99, 102, 241, 0.12);
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.4);
   border-radius: 4px;
 }
 
 #snapblock-inspector-badge {
   position: absolute;
   left: 0;
-  top: -28px;
+  top: -30px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 10px;
-  background: rgba(15, 23, 42, 0.92);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  padding: 3px 10px;
+  background: rgba(13, 19, 34, 0.96);
+  border: 1px solid rgba(99, 102, 241, 0.4);
   border-radius: 6px;
   color: #f8fafc;
   font-size: 11px;
   font-weight: 600;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   pointer-events: none;
 }
 
 .snapblock-badge-tag {
-  color: #60a5fa;
+  color: #a5b4fc;
 }
 
 .snapblock-badge-dim {
   color: #94a3b8;
-  font-family: monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 /* --------------------------------------------------------------------------
@@ -69,7 +68,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(8, 12, 20, 0.55);
   z-index: 2147483641;
   cursor: crosshair;
 }
@@ -78,7 +77,7 @@
   position: absolute;
   border: 2px solid #06b6d4;
   background: rgba(6, 182, 212, 0.08);
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
 }
 
@@ -89,7 +88,7 @@
   background: #ffffff;
   border: 2px solid #06b6d4;
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .snapblock-handle-tl { top: -5px; left: -5px; cursor: nwse-resize; }
@@ -103,21 +102,23 @@
 
 #snapblock-area-badge {
   position: absolute;
-  top: -26px;
+  top: -28px;
   left: 0;
-  background: rgba(15, 23, 42, 0.9);
-  color: #06b6d4;
+  background: rgba(13, 19, 34, 0.95);
+  color: #67e8f9;
   font-size: 11px;
-  font-family: monospace;
-  font-weight: bold;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
   padding: 2px 8px;
   border-radius: 4px;
-  border: 1px solid rgba(6, 182, 212, 0.4);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 #snapblock-area-toolbar {
   position: absolute;
-  bottom: -44px;
+  bottom: -46px;
   right: 0;
   display: flex;
   gap: 8px;
@@ -145,15 +146,18 @@
   top: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.9);
+  background: rgba(13, 19, 34, 0.95);
   color: #f8fafc;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.6);
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* --------------------------------------------------------------------------
@@ -166,47 +170,43 @@
   z-index: 2147483645;
   display: flex;
   align-items: center;
-  background: rgba(15, 23, 42, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(13, 19, 34, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 30px;
-  padding: 6px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(99, 102, 241, 0.2);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 5px;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #snapblock-bar-toggle {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 12px;
+  padding: 5px 10px;
   cursor: pointer;
   border-radius: 20px;
   user-select: none;
 }
 
 .snapblock-bar-logo {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 6px;
 }
 
 .snapblock-bar-title {
   color: #f8fafc;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.3px;
 }
 
 .snapblock-bar-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-left: 6px;
-  padding-left: 8px;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  gap: 3px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .snapblock-floating-minimized .snapblock-bar-actions {
@@ -216,26 +216,21 @@
 .snapblock-bar-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: transparent;
   border: none;
   color: #cbd5e1;
-  padding: 6px 12px;
-  border-radius: 16px;
-  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 14px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .snapblock-bar-btn:hover {
-  background: rgba(99, 102, 241, 0.25);
+  background: rgba(99, 102, 241, 0.2);
   color: #ffffff;
-  transform: translateY(-1px);
-}
-
-.snapblock-bar-btn .snapblock-icon {
-  font-size: 14px;
 }
 
 /* --------------------------------------------------------------------------
@@ -256,68 +251,63 @@
 .snapblock-modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
+  background: rgba(8, 12, 20, 0.78);
 }
 
 .snapblock-modal-card {
   position: relative;
   width: 90vw;
-  max-width: 900px;
+  max-width: 960px;
   max-height: 85vh;
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(99, 102, 241, 0.3);
+  background: #0d1322;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: snapblockPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes snapblockPopIn {
-  from { opacity: 0; transform: scale(0.94) translateY(12px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .snapblock-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 10px 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(30, 41, 59, 0.5);
+  background: #131d31;
+  gap: 12px;
 }
 
 .snapblock-modal-title {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   color: #f8fafc;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .snapblock-modal-body {
   flex: 1;
-  padding: 20px;
+  padding: 24px;
   overflow: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+  background: #080c14;
 }
 
 .snapblock-img-wrapper {
   max-width: 100%;
   max-height: 55vh;
   overflow: auto;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.snapblock-img-wrapper img {
+.snapblock-img-wrapper img,
+.snapblock-img-wrapper canvas {
   display: block;
   max-width: 100%;
   height: auto;
@@ -327,21 +317,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 10px 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(30, 41, 59, 0.5);
+  background: #131d31;
 }
 
 .snapblock-modal-info {
   color: #94a3b8;
-  font-size: 12px;
-  font-family: monospace;
+  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 .snapblock-modal-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 /* --------------------------------------------------------------------------
@@ -350,36 +341,35 @@
 .snapblock-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  gap: 6px;
+  padding: 6px 14px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   border: none;
-  transition: all 0.2s ease;
+  transition: background-color 0.15s ease, transform 0.12s ease;
 }
 
 .snapblock-btn-primary {
-  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  background: #6366f1;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
 }
 
 .snapblock-btn-primary:hover {
-  filter: brightness(1.1);
+  background: #4f46e5;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.5);
 }
 
 .snapblock-btn-secondary {
-  background: rgba(51, 65, 85, 0.8);
+  background: #1e293b;
   color: #f8fafc;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .snapblock-btn-secondary:hover {
-  background: rgba(71, 85, 105, 0.9);
+  background: #334155;
   transform: translateY(-1px);
 }
 
@@ -387,16 +377,19 @@
   background: transparent;
   border: none;
   color: #94a3b8;
-  font-size: 16px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  padding: 4px 8px;
   border-radius: 6px;
-  transition: all 0.15s ease;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 .snapblock-icon-btn:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Toast System */
@@ -414,19 +407,18 @@
 .snapblock-toast {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  background: rgba(15, 23, 42, 0.94);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 30px;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(13, 19, 34, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
   color: #f8fafc;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.5);
   opacity: 0;
   transform: translateY(12px);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: auto;
 }
 
@@ -435,36 +427,41 @@
   transform: translateY(0);
 }
 
+.snapblock-toast-icon {
+  display: flex;
+  align-items: center;
+}
+
 .snapblock-toast-success .snapblock-toast-icon { color: #10b981; }
 .snapblock-toast-error .snapblock-toast-icon { color: #ef4444; }
-.snapblock-toast-info .snapblock-toast-icon { color: #3b82f6; }
+.snapblock-toast-info .snapblock-toast-icon { color: #6366f1; }
 
 /* --------------------------------------------------------------------------
-   7. PRO EDITOR TOOLBAR & CANVAS STYLES
+   7. MODAL EDITOR TOOLBAR & CANVAS
    -------------------------------------------------------------------------- */
 .snapblock-editor-toolbar {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(15, 23, 42, 0.9);
-  padding: 4px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 4px;
+  background: #0d1322;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .snapblock-tool-btn {
   background: transparent;
   border: 1px solid transparent;
   color: #94a3b8;
-  padding: 5px 9px;
+  padding: 4px 8px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
-  transition: all 0.15s ease;
+  gap: 4px;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .snapblock-tool-btn:hover {
@@ -473,7 +470,7 @@
 }
 
 .snapblock-tool-btn.active {
-  background: rgba(79, 70, 229, 0.35);
+  background: rgba(99, 102, 241, 0.25);
   border-color: #6366f1;
   color: #ffffff;
 }
@@ -481,14 +478,14 @@
 .snapblock-color-picker {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding-left: 8px;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 5px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .snapblock-color-dot {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid transparent;
@@ -501,26 +498,16 @@
 
 .snapblock-color-dot.active {
   border-color: #ffffff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 }
 
 .snapblock-format-select {
-  background: #1e293b;
+  background: #0d1322;
   color: #f8fafc;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 7px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
   cursor: pointer;
   outline: none;
-}
-
-#snapblock-editor-canvas {
-  max-width: 100%;
-  max-height: 55vh;
-  display: block;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  cursor: crosshair;
 }
