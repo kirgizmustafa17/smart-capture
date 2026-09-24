@@ -1,11 +1,23 @@
 {
   "appName": {
-    "message": "SmartCapture Beta PRO - Ekran Görüntüsü & Blok Seçimi",
+    "message": "SmartCapture PRO",
     "description": "Eklenti adı"
   },
   "appDesc": {
-    "message": "Web sayfalarındaki blokları, elemanları, dörtgen ve serbest alanları kolayca kırpıp ekran görüntüsü alın.",
+    "message": "Hassas Ekran Yakalama & Düzenleyici Stüdyosu",
     "description": "Eklenti açıklaması"
+  },
+  "badgePro": {
+    "message": "PRO",
+    "description": "Pro rozeti"
+  },
+  "statusReady": {
+    "message": "Hazır",
+    "description": "Hazır durum etiketi"
+  },
+  "studioAction": {
+    "message": "Stüdyo",
+    "description": "Stüdyo butonu metni"
   },
   "modeBlock": {
     "message": "Blok / Öğe Seçimi",
@@ -95,9 +107,17 @@
     "message": "Otomatik Panoya Kopyala",
     "description": "Ayar anahtarı"
   },
+  "settingAutoCopySubtext": {
+    "message": "Yakalama sonrası doğrudan panoya kopyala",
+    "description": "Panoya kopyalama ayar açıklaması"
+  },
   "settingAutoDownload": {
     "message": "Otomatik İndir",
     "description": "Ayar anahtarı"
+  },
+  "settingAutoDownloadSubtext": {
+    "message": "Görseli doğrudan bilgisayara kaydet",
+    "description": "İndirme ayar açıklaması"
   },
   "restrictedPageNotice": {
     "message": "Chrome güvenlik kısıtlaması nedeniyle bu sistem sayfasında ekran görüntüsü alınamaz.",

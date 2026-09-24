@@ -1,11 +1,23 @@
 {
   "appName": {
-    "message": "SmartCapture Beta PRO - Element & Screenshot",
+    "message": "SmartCapture PRO",
     "description": "Extension title"
   },
   "appDesc": {
-    "message": "Capture DOM element blocks, custom rectangles, freehand shapes, visible tab or full web pages with ease.",
+    "message": "High-Precision Screen Capture & Canvas Studio",
     "description": "Extension description"
+  },
+  "badgePro": {
+    "message": "PRO",
+    "description": "Pro badge"
+  },
+  "statusReady": {
+    "message": "Ready",
+    "description": "Ready status label"
+  },
+  "studioAction": {
+    "message": "Studio",
+    "description": "Studio button text"
   },
   "modeBlock": {
     "message": "Element / Block Selector",
@@ -95,9 +107,17 @@
     "message": "Auto-copy to Clipboard",
     "description": "Setting toggle"
   },
+  "settingAutoCopySubtext": {
+    "message": "Instantly copy captured image to clipboard",
+    "description": "Setting toggle subtext"
+  },
   "settingAutoDownload": {
     "message": "Auto Download",
     "description": "Setting toggle"
+  },
+  "settingAutoDownloadSubtext": {
+    "message": "Save image file directly to downloads",
+    "description": "Setting toggle subtext"
   },
   "restrictedPageNotice": {
     "message": "Due to Chrome security policies, screenshots cannot be captured on this internal page.",
