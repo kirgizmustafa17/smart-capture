@@ -15,6 +15,7 @@ function initStudio() {
   const dimInfo = document.getElementById('image-dimensions-info');
   const undoBtn = document.getElementById('btn-undo');
   const redoBtn = document.getElementById('btn-redo');
+  const deleteBtn = document.getElementById('btn-delete');
 
   // Load screenshot data from chrome.storage.local
   chrome.storage.local.get(['pendingScreenshot'], (result) => {
@@ -27,13 +28,32 @@ function initStudio() {
 
     currentImageSrc = dataUrl;
 
-    // Initialize SmartEditor Canvas with history callback
+    // Initialize SmartEditor Canvas with history & selection callbacks
     if (window.SmartEditor) {
-      SmartEditor.initEditor(canvasEl, dataUrl, ({ canUndo, canRedo }) => {
-        if (undoBtn) undoBtn.disabled = !canUndo;
-        if (redoBtn) redoBtn.disabled = !canRedo;
-        updateDimensions();
-      });
+      SmartEditor.initEditor(
+        canvasEl,
+        dataUrl,
+        ({ canUndo, canRedo }) => {
+          if (undoBtn) undoBtn.disabled = !canUndo;
+          if (redoBtn) redoBtn.disabled = !canRedo;
+          updateDimensions();
+        },
+        (selectedEl) => {
+          if (deleteBtn) deleteBtn.disabled = !selectedEl;
+          if (selectedEl) {
+            if (selectedEl.color) {
+              document.querySelectorAll('.color-dot').forEach(d => {
+                d.classList.toggle('active', d.dataset.color.toLowerCase() === selectedEl.color.toLowerCase());
+              });
+            }
+            if (selectedEl.strokeWidth) {
+              document.querySelectorAll('.stroke-btn').forEach(b => {
+                b.classList.toggle('active', parseInt(b.dataset.stroke, 10) === selectedEl.strokeWidth);
+              });
+            }
+          }
+        }
+      );
     }
 
     updateDimensions();
@@ -145,6 +165,7 @@ function setupColorPalette() {
 function setupHistoryControls() {
   const undoBtn = document.getElementById('btn-undo');
   const redoBtn = document.getElementById('btn-redo');
+  const deleteBtn = document.getElementById('btn-delete');
   const resetBtn = document.getElementById('btn-reset');
 
   if (undoBtn) {
@@ -156,6 +177,12 @@ function setupHistoryControls() {
   if (redoBtn) {
     redoBtn.addEventListener('click', () => {
       if (window.SmartEditor) SmartEditor.redo();
+    });
+  }
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+      if (window.SmartEditor) SmartEditor.deleteSelected();
     });
   }
 
@@ -452,6 +479,14 @@ function setupKeyboardShortcuts() {
       const zoomOutBtn = document.getElementById('btn-zoom-out');
       if (zoomOutBtn) zoomOutBtn.click();
       return;
+    }
+
+    // Delete selected element: Delete or Backspace
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+      if (window.SmartEditor && SmartEditor.deleteSelected()) {
+        e.preventDefault();
+        return;
+      }
     }
 
     // Escape: Return to select tool
