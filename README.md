@@ -2,6 +2,8 @@
 
 > Powerful, privacy-first Chrome & Chromium screenshot extension with DOM element inspection, freehand cropping, full-page stitching, and an integrated Canvas Editor Studio.
 
+[English](README.md) | [Türkçe](README.tr.md)
+
 ---
 
 ## 🌟 Key Features
@@ -67,7 +69,8 @@ smart-capture/
 ├── editor/                  # Full-screen Editor Studio (standalone tab)
 │   ├── editor.html
 │   ├── editor.js
-│   └── editor.css
+│   ├── editor.css
+│   └── canvas-engine.js     # Vector annotation, filter & selection engine
 ├── popup/                   # Browser action extension popup UI
 │   ├── popup.html
 │   ├── popup.js
@@ -75,6 +78,7 @@ smart-capture/
 ├── lib/                     # Common utilities
 │   └── utils.js
 ├── icons/                   # Extension icons (16, 48, 128px)
+├── GEMINI.md                # Project rules & SemVer policy
 └── generate_icons.js        # Canvas script to generate app icons
 ```
 
