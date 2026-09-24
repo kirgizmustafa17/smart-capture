@@ -125,6 +125,15 @@
             </svg>
             <span class="btn-label" data-i18n="toolCrop">Kırp</span>
           </button>
+
+          <button class="tool-btn" data-tool="eyedropper" title="Renk Seçici Damlalık (I)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m14 2 4 4L7 17H3v-4L14 2z"/>
+              <path d="m13 5 4 4"/>
+              <line x1="2" y1="22" x2="6" y2="18"/>
+            </svg>
+            <span class="btn-label" data-i18n="toolEyedropper">Damlalık</span>
+          </button>
         </div>
 
         <div class="toolbar-divider"></div>
@@ -153,6 +162,7 @@
           <button class="color-dot" data-color="#8b5cf6" style="--swatch-color: #8b5cf6;" title="Mor" aria-label="Mor"></button>
           <button class="color-dot" data-color="#ffffff" style="--swatch-color: #ffffff;" title="Beyaz" aria-label="Beyaz"></button>
           <button class="color-dot dark-swatch" data-color="#0f172a" style="--swatch-color: #0f172a;" title="Siyah" aria-label="Siyah"></button>
+          <button id="picked-color-dot" class="color-dot picked-swatch hidden" data-color="#ef4444" style="--swatch-color: #ef4444;" title="Damlalık ile Seçilen Renk" aria-label="Damlalık ile Seçilen Renk"></button>
         </div>
 
         <div class="toolbar-divider"></div>
@@ -190,7 +200,7 @@
         </div>
       </div>
 
-      <!-- Right Action Export Controls -->
+      <!-- Right Action Controls (Zoom & Dock Toggle) -->
       <div class="header-right">
         <!-- Zoom Controls -->
         <div class="zoom-controls">
@@ -216,60 +226,147 @@
 
         <div class="toolbar-divider"></div>
 
-        <select id="export-format" class="format-select" aria-label="Format Seçimi">
-          <option value="image/png">PNG Görsel</option>
-          <option value="image/jpeg">JPEG (Hafif)</option>
-          <option value="image/webp">WebP (Modern)</option>
-        </select>
-
-        <button id="btn-copy" class="btn btn-primary" title="Panoya Kopyala (Ctrl+C)">
+        <button id="btn-toggle-dock" class="btn-dock-toggle" title="Dışa Aktarma Panelini Aç/Kapat" aria-label="Dışa Aktarma Panelini Aç/Kapat">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect width="13" height="13" x="9" y="9" rx="2" ry="2"/>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <line x1="15" y1="3" x2="15" y2="21"/>
           </svg>
-          <span data-i18n="btnCopy">Panoya Kopyala</span>
-        </button>
-
-        <button id="btn-download" class="btn btn-secondary" title="Resmi İndir (Ctrl+S)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          <span data-i18n="btnDownload">Resmi İndir</span>
+          <span class="btn-dock-toggle-label" data-i18n="exportDockTitle">Dışa Aktar</span>
         </button>
       </div>
     </header>
 
-    <!-- Main Workspace Studio Canvas -->
-    <main class="editor-workspace" id="editor-workspace">
-      <div class="canvas-viewport" id="canvas-viewport">
-        <div class="canvas-wrapper" id="canvas-wrapper">
-          <canvas id="studio-canvas"></canvas>
-          <div id="crop-overlay-box" class="crop-box hidden">
-            <div class="crop-handle crop-handle-tl"></div>
-            <div class="crop-handle crop-handle-tr"></div>
-            <div class="crop-handle crop-handle-bl"></div>
-            <div class="crop-handle crop-handle-br"></div>
-            <div class="crop-hud-badge">
-              <span id="crop-dimensions">0 × 0 px</span>
-              <button id="btn-apply-crop" class="crop-hud-btn crop-confirm" title="Kırpmayı Uygula (Enter)">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-              </button>
-              <button id="btn-cancel-crop" class="crop-hud-btn crop-cancel" title="Kırpmayı İptal Et (Esc)">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"/>
-                  <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
-              </button>
+    <!-- Main Studio Workspace with Right Export Dock -->
+    <div class="editor-main-container">
+      <main class="editor-workspace" id="editor-workspace">
+        <div class="canvas-viewport" id="canvas-viewport">
+          <div class="canvas-wrapper" id="canvas-wrapper">
+            <canvas id="studio-canvas"></canvas>
+
+            <!-- Eyedropper Live Loupe HUD -->
+            <div id="eyedropper-loupe" class="eyedropper-loupe hidden">
+              <span class="loupe-swatch" id="loupe-swatch"></span>
+              <span class="loupe-hex" id="loupe-hex">#ef4444</span>
+            </div>
+
+            <div id="crop-overlay-box" class="crop-box hidden">
+              <div class="crop-handle crop-handle-tl"></div>
+              <div class="crop-handle crop-handle-tr"></div>
+              <div class="crop-handle crop-handle-bl"></div>
+              <div class="crop-handle crop-handle-br"></div>
+              <div class="crop-hud-badge">
+                <span id="crop-dimensions">0 × 0 px</span>
+                <button id="btn-apply-crop" class="crop-hud-btn crop-confirm" title="Kırpmayı Uygula (Enter)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </button>
+                <button id="btn-cancel-crop" class="crop-hud-btn crop-cancel" title="Kırpmayı İptal Et (Esc)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <input type="text" id="canvas-inline-text-input" class="inline-text-input hidden" placeholder="Metin yazın..." />
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Export Sidebar / Dock -->
+      <aside class="export-dock" id="export-dock" aria-label="Dışa Aktarma ve Format Paneli">
+        <div class="dock-header">
+          <div class="dock-title-group">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <h2 data-i18n="exportDockTitle">Dışa Aktar</h2>
+          </div>
+          <button id="btn-close-dock" class="dock-close-btn" title="Paneli Gizle" aria-label="Paneli Gizle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Format Selection Section -->
+        <div class="dock-section">
+          <div class="dock-section-header">
+            <span class="dock-label" data-i18n="exportFormatLabel">Görüntü Formatı</span>
+            <span id="format-badge-active" class="format-badge-current">PNG</span>
+          </div>
+          <div class="format-segment" role="radiogroup" aria-label="Format Seçimi">
+            <button class="format-pill active" data-format="image/png" type="button">
+              <span class="format-pill-title">PNG</span>
+              <span class="format-pill-sub">Kayıpsız</span>
+            </button>
+            <button class="format-pill" data-format="image/jpeg" type="button">
+              <span class="format-pill-title">JPG</span>
+              <span class="format-pill-sub">Hafif</span>
+            </button>
+            <button class="format-pill" data-format="image/webp" type="button">
+              <span class="format-pill-title">WebP</span>
+              <span class="format-pill-sub">Modern</span>
+            </button>
+          </div>
+          <select id="export-format" class="format-select-native hidden" aria-label="Format Seçimi">
+            <option value="image/png" selected>PNG Görsel</option>
+            <option value="image/jpeg">JPEG (Hafif)</option>
+            <option value="image/webp">WebP (Modern)</option>
+          </select>
+          <p id="format-hint" class="dock-subtext">Kayıpsız piksel kalitesi ve şeffaflık desteği.</p>
+        </div>
+
+        <!-- Primary Export Actions -->
+        <div class="dock-section dock-actions">
+          <button id="btn-copy" class="btn-dock btn-dock-primary" title="Panoya Kopyala (Ctrl+C)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="13" height="13" x="9" y="9" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <div class="btn-dock-text">
+              <span class="btn-dock-main" data-i18n="btnCopy">Panoya Kopyala</span>
+              <span class="btn-dock-chip">Ctrl+C</span>
+            </div>
+          </button>
+
+          <button id="btn-download" class="btn-dock btn-dock-secondary" title="Resmi İndir (Ctrl+S)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <div class="btn-dock-text">
+              <span class="btn-dock-main" data-i18n="btnDownload">Resmi İndir</span>
+              <span class="btn-dock-chip">Ctrl+S</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Image Info Summary Card -->
+        <div class="dock-section dock-meta-card">
+          <div class="meta-card-title">Görsel Detayları</div>
+          <div class="meta-card-row">
+            <span class="meta-card-label">Çözünürlük</span>
+            <span id="dock-dimensions" class="meta-card-value">-</span>
+          </div>
+          <div class="meta-card-row">
+            <span class="meta-card-label">En-Boy Oranı</span>
+            <span id="dock-aspect-ratio" class="meta-card-value">-</span>
+          </div>
+          <div class="meta-card-row">
+            <span class="meta-card-label">Aktif Renk</span>
+            <div class="meta-card-color">
+              <span id="dock-color-swatch" class="dock-swatch-circle"></span>
+              <span id="dock-color-hex" class="dock-hex-label">#ef4444</span>
             </div>
           </div>
-          <input type="text" id="canvas-inline-text-input" class="inline-text-input hidden" placeholder="Metin yazın..." />
         </div>
-      </div>
-    </main>
+      </aside>
+    </div>
 
     <!-- Footer Status Bar -->
     <footer class="editor-footer">
@@ -291,6 +388,7 @@
         <span class="shortcut-item"><span class="kbd-chip">T</span> Yazı</span>
         <span class="shortcut-item shortcut-optional"><span class="kbd-chip">N</span> Adım</span>
         <span class="shortcut-item shortcut-optional"><span class="kbd-chip">C</span> Kırp</span>
+        <span class="shortcut-item"><span class="kbd-chip">I</span> Damlalık</span>
         <span class="shortcut-item"><span class="kbd-chip">Ctrl+Z</span> Geri Al</span>
         <span class="shortcut-item"><span class="kbd-chip">Ctrl+C</span> Kopyala</span>
       </div>

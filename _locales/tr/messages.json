@@ -190,5 +190,21 @@
   "zoomFit": {
     "message": "Sığdır",
     "description": "Ekrana sığdır"
+  },
+  "toolEyedropper": {
+    "message": "Damlalık",
+    "description": "Renk seçici damlalık aracı"
+  },
+  "exportDockTitle": {
+    "message": "Dışa Aktar",
+    "description": "Dışa aktarma paneli başlığı"
+  },
+  "exportFormatLabel": {
+    "message": "Görüntü Formatı",
+    "description": "Format seçimi etiketi"
+  },
+  "colorPickedSuccess": {
+    "message": "Renk seçildi ve kopyalandı",
+    "description": "Renk seçici başarı bildirimi"
   }
 }

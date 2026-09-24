@@ -42,9 +42,7 @@ function initStudio() {
           if (deleteBtn) deleteBtn.disabled = !selectedEl;
           if (selectedEl) {
             if (selectedEl.color) {
-              document.querySelectorAll('.color-dot').forEach(d => {
-                d.classList.toggle('active', d.dataset.color.toLowerCase() === selectedEl.color.toLowerCase());
-              });
+              updateActiveColorUI(selectedEl.color);
             }
             if (selectedEl.strokeWidth) {
               document.querySelectorAll('.stroke-btn').forEach(b => {
@@ -63,17 +61,51 @@ function initStudio() {
     setupHistoryControls();
     setupZoomControls();
     setupExportActions();
+    setupExportDock();
     setupKeyboardShortcuts();
     setupCropInteraction();
     setupCursorTracking();
+    setupEyedropperLoupe();
+    initI18n();
   });
+}
+
+function initI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const message = SmartUtils.t(key);
+    if (message) {
+      el.textContent = message;
+    }
+  });
+}
+
+function gcd(a, b) {
+  return b === 0 ? a : gcd(b, a % b);
 }
 
 function updateDimensions() {
   const canvasEl = document.getElementById('studio-canvas');
   const dimInfo = document.getElementById('image-dimensions-info');
-  if (canvasEl && dimInfo) {
-    dimInfo.textContent = `${canvasEl.width} × ${canvasEl.height} px`;
+  const dockDim = document.getElementById('dock-dimensions');
+  const dockAspect = document.getElementById('dock-aspect-ratio');
+
+  if (canvasEl) {
+    const w = canvasEl.width;
+    const h = canvasEl.height;
+    if (dimInfo) dimInfo.textContent = `${w} × ${h} px`;
+    if (dockDim) dockDim.textContent = `${w} × ${h} px`;
+
+    if (dockAspect && w > 0 && h > 0) {
+      const d = gcd(w, h);
+      const rw = w / d;
+      const rh = h / d;
+      if (rw <= 32 && rh <= 32) {
+        dockAspect.textContent = `${rw}:${rh}`;
+      } else {
+        dockAspect.textContent = `${(w / h).toFixed(2)}:1`;
+      }
+    }
   }
 }
 
@@ -96,7 +128,8 @@ function setupToolInteractions() {
     blur: 'Yumuşak Blur (B)',
     text: 'Metin Ekle (T)',
     step: 'Adım İşareti (N)',
-    crop: 'Görseli Kırp (C)'
+    crop: 'Görseli Kırp (C)',
+    eyedropper: 'Renk Seçici Damlalık (I)'
   };
 
   toolButtons.forEach(btn => {
@@ -126,6 +159,12 @@ function setupToolInteractions() {
     if (cropBox && tool !== 'crop') {
       cropBox.classList.add('hidden');
     }
+
+    // Hide eyedropper loupe when leaving eyedropper
+    const loupe = document.getElementById('eyedropper-loupe');
+    if (loupe && tool !== 'eyedropper') {
+      loupe.classList.add('hidden');
+    }
   };
 }
 
@@ -145,18 +184,56 @@ function setupStrokeWidthControls() {
 }
 
 /**
- * Color swatches
+ * Color swatches & active color management
  */
+function updateActiveColorUI(hex) {
+  if (!hex) return;
+  const lowerHex = hex.toLowerCase();
+  const colorDots = document.querySelectorAll('.color-dot');
+  let matched = false;
+
+  colorDots.forEach(d => {
+    const isMatch = d.dataset.color && d.dataset.color.toLowerCase() === lowerHex;
+    d.classList.toggle('active', isMatch);
+    if (isMatch) matched = true;
+  });
+
+  const pickedDot = document.getElementById('picked-color-dot');
+  if (pickedDot) {
+    pickedDot.dataset.color = hex;
+    pickedDot.style.setProperty('--swatch-color', hex);
+    pickedDot.title = `Damlalık ile Seçilen Renk (${hex.toUpperCase()})`;
+    pickedDot.classList.remove('hidden');
+    if (!matched) {
+      pickedDot.classList.add('active');
+    }
+  }
+
+  const dockSwatch = document.getElementById('dock-color-swatch');
+  const dockHex = document.getElementById('dock-color-hex');
+  if (dockSwatch) dockSwatch.style.backgroundColor = hex;
+  if (dockHex) dockHex.textContent = hex.toUpperCase();
+}
+
 function setupColorPalette() {
   const colorDots = document.querySelectorAll('.color-dot');
   colorDots.forEach(dot => {
     dot.addEventListener('click', () => {
-      colorDots.forEach(d => d.classList.remove('active'));
-      dot.classList.add('active');
       const color = dot.dataset.color;
+      updateActiveColorUI(color);
       if (window.SmartEditor) SmartEditor.setColor(color);
     });
   });
+
+  if (window.SmartEditor) {
+    SmartEditor.setOnColorPicked((hex) => {
+      updateActiveColorUI(hex);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(hex).catch(() => {});
+      }
+      SmartUtils.showToast(`Renk seçildi: ${hex.toUpperCase()} (Kopyalandı)`, 'success');
+    });
+  }
 }
 
 /**
@@ -408,6 +485,93 @@ function setupExportActions() {
 }
 
 /**
+ * Right sidebar / export dock controller
+ */
+function setupExportDock() {
+  const formatPills = document.querySelectorAll('.format-pill');
+  const formatSelect = document.getElementById('export-format');
+  const badgeActive = document.getElementById('format-badge-active');
+  const hint = document.getElementById('format-hint');
+  const toggleBtn = document.getElementById('btn-toggle-dock');
+  const closeBtn = document.getElementById('btn-close-dock');
+  const dock = document.getElementById('export-dock');
+
+  const formatHints = {
+    'image/png': 'Kayıpsız piksel kalitesi ve şeffaflık desteği.',
+    'image/jpeg': 'Daha küçük dosya boyutu, fotoğraflar için ideal.',
+    'image/webp': 'Yeni nesil yüksek sıkıştırma ve modern web formatı.'
+  };
+
+  const formatBadges = {
+    'image/png': 'PNG',
+    'image/jpeg': 'JPG',
+    'image/webp': 'WebP'
+  };
+
+  formatPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const format = pill.dataset.format;
+      formatPills.forEach(p => p.classList.toggle('active', p === pill));
+      if (formatSelect) formatSelect.value = format;
+      if (badgeActive && formatBadges[format]) badgeActive.textContent = formatBadges[format];
+      if (hint && formatHints[format]) hint.textContent = formatHints[format];
+    });
+  });
+
+  function toggleDock() {
+    if (!dock) return;
+    const isCollapsed = dock.classList.toggle('collapsed');
+    if (toggleBtn) toggleBtn.classList.toggle('active', !isCollapsed);
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', toggleDock);
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', toggleDock);
+  }
+}
+
+/**
+ * Eyedropper Live Magnifier & Loupe HUD
+ */
+function setupEyedropperLoupe() {
+  const canvas = document.getElementById('studio-canvas');
+  const loupe = document.getElementById('eyedropper-loupe');
+  const loupeSwatch = document.getElementById('loupe-swatch');
+  const loupeHex = document.getElementById('loupe-hex');
+  if (!canvas || !loupe) return;
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (!window.SmartEditor || SmartEditor.getTool() !== 'eyedropper') {
+      loupe.classList.add('hidden');
+      return;
+    }
+
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = Math.round((e.clientX - rect.left) * scaleX);
+    const y = Math.round((e.clientY - rect.top) * scaleY);
+
+    const colorData = SmartEditor.getColorAtCoords(x, y);
+    if (colorData) {
+      if (loupeSwatch) loupeSwatch.style.backgroundColor = colorData.hex;
+      if (loupeHex) loupeHex.textContent = colorData.hex.toUpperCase();
+      loupe.style.left = `${e.clientX - rect.left}px`;
+      loupe.style.top = `${e.clientY - rect.top}px`;
+      loupe.classList.remove('hidden');
+    } else {
+      loupe.classList.add('hidden');
+    }
+  });
+
+  canvas.addEventListener('pointerleave', () => {
+    loupe.classList.add('hidden');
+  });
+}
+
+/**
  * Keyboard shortcuts controller
  */
 function setupKeyboardShortcuts() {
@@ -422,7 +586,8 @@ function setupKeyboardShortcuts() {
     'b': 'blur',
     't': 'text',
     'n': 'step',
-    'c': 'crop'
+    'c': 'crop',
+    'i': 'eyedropper'
   };
 
   document.addEventListener('keydown', (e) => {

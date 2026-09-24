@@ -190,5 +190,21 @@
   "zoomFit": {
     "message": "Fit",
     "description": "Fit to view"
+  },
+  "toolEyedropper": {
+    "message": "Eyedropper",
+    "description": "Eyedropper color picker tool"
+  },
+  "exportDockTitle": {
+    "message": "Export",
+    "description": "Export panel dock title"
+  },
+  "exportFormatLabel": {
+    "message": "Image Format",
+    "description": "Format selection label"
+  },
+  "colorPickedSuccess": {
+    "message": "Color picked and copied",
+    "description": "Color picked success notification"
   }
 }

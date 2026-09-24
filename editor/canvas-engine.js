@@ -33,6 +33,7 @@ window.SmartEditor = (function () {
   const redoStack = [];
   let onHistoryChangeCallback = null;
   let onSelectionChangeCallback = null;
+  let onColorPickedCallback = null;
   let activeTextCommit = null;
 
   function commitActiveText() {
@@ -96,6 +97,32 @@ window.SmartEditor = (function () {
       render(false);
     }
     currentTool = toolName;
+  }
+
+  function rgbToHex(r, g, b) {
+    const toHex = (c) => {
+      const hex = Math.max(0, Math.min(255, Math.round(c))).toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    return '#' + toHex(r) + toHex(g) + toHex(b);
+  }
+
+  function getColorAtCoords(x, y) {
+    if (!activeCanvas || !activeCtx) return null;
+    const clampX = Math.max(0, Math.min(activeCanvas.width - 1, Math.round(x)));
+    const clampY = Math.max(0, Math.min(activeCanvas.height - 1, Math.round(y)));
+    try {
+      const pixel = activeCtx.getImageData(clampX, clampY, 1, 1).data;
+      return {
+        hex: rgbToHex(pixel[0], pixel[1], pixel[2]),
+        r: pixel[0],
+        g: pixel[1],
+        b: pixel[2],
+        a: pixel[3]
+      };
+    } catch (e) {
+      return null;
+    }
   }
 
   function setColor(colorHex) {
@@ -625,6 +652,20 @@ window.SmartEditor = (function () {
       return;
     }
 
+    // EYEDROPPER COLOR PICKER INTERACTION
+    if (currentTool === 'eyedropper') {
+      e.preventDefault();
+      e.stopPropagation();
+      const colorData = getColorAtCoords(coords.x, coords.y);
+      if (colorData) {
+        setColor(colorData.hex);
+        if (typeof onColorPickedCallback === 'function') {
+          onColorPickedCallback(colorData.hex, colorData);
+        }
+      }
+      return;
+    }
+
     // TEXT TOOL INTERACTION
     if (currentTool === 'text') {
       e.preventDefault();
@@ -1102,7 +1143,11 @@ window.SmartEditor = (function () {
   return {
     initEditor,
     setTool,
+    getTool: () => currentTool,
     setColor,
+    getColor: () => currentColor,
+    getColorAtCoords,
+    setOnColorPicked: (cb) => { onColorPickedCallback = cb; },
     setStrokeWidth,
     deleteSelected,
     getSelectedElement,

@@ -17,16 +17,22 @@
 
 ### 🎨 Integrated Editor Studio
 - **Annotation Tools**: Brushes, arrows, shapes (rectangles, ellipses), and text labels.
+- **Eyedropper Color Picker (I)**:
+  - Precision live magnifier loupe HUD to sample any pixel color directly from the image canvas.
+  - Automatically copies hex code to clipboard and registers into the active palette swatch.
 - **Privacy Obfuscation**:
   - **Pixelate (Mosaic)**: Obfuscate sensitive credentials, emails, and account numbers.
   - **Gaussian Blur**: Soft blur for subtle background or privacy redaction.
 - **Color & Size Customization**: Rich palette selection with adjustable stroke thickness.
 - **History & Canvas Performance**: Full Undo/Redo stack with optimized `willReadFrequently` Canvas2D rendering.
 
-### ⚡ Seamless Workflow & Exports
-- **Quick Copy**: One-click copy directly to system clipboard.
-- **Export Options**: High-resolution PNG and JPEG download.
-- **Keyboard Shortcuts**: Escape to cancel, hotkeys for fast captures.
+### ⚡ Seamless Workflow, Right Export Dock & Multi-Format
+- **Right Export Sidebar / Dock**:
+  - One-click format switcher pills (`PNG`, `JPG`, `WebP`).
+  - Tactile **Copy to Clipboard** (`Ctrl+C`) and **Download** (`Ctrl+S`) action buttons.
+  - Live image overview card with resolution dimensions, aspect ratio, and active sampled color.
+  - Collapsible dock layout with dedicated toggle controls.
+- **Keyboard Shortcuts**: V (Select), P (Pen), A (Arrow), R (Rect), O (Circle), H (Highlight), M (Mosaic), B (Blur), T (Text), N (Step), C (Crop), I (Eyedropper).
 - **i18n Ready**: Native multi-language support (English and Turkish).
 
 ---

@@ -23,15 +23,21 @@
   - Köşe noktalarından boyutlandırma (resize).
   - Seçim sonrası canlı renk ve çizgi kalınlığı (2px / 4px / 8px) değişimi.
   - `Delete` / `Backspace` tuşu veya araç çubuğundaki silme butonuyla anında kaldırma.
+- **Renk Seçici Damlalık (I)**:
+  - Tuval üzerindeki herhangi bir pikselden canlı büyüteç (loupe) HUD ile hassas renk örnekleme.
+  - Seçilen rengin HEX kodunu otomatik kopyalama ve dinamik palet rozetine ekleme.
 - **Gizlilik & Sansürleme Araçları**:
   - **Pikselli Mozaik**: Hassas kimlik bilgileri, e-postalar ve hesap numaralarını sansürleyin.
   - **Yumuşak Blur**: Arka planı veya gizli alanları estetik bir biçimde yumuşatın.
 - **Geçmiş & Performans**: `Ctrl+Z` (Geri Al) ve `Ctrl+Y` (Yinele) geçmiş yığını, `willReadFrequently` ile optimize edilmiş 2D tuval işleme motoru.
 
-### ⚡ Hızlı İş Akışı ve Dışa Aktarım
-- **Hızlı Kopyalama**: Tek tıkla doğrudan sistem panosuna kopyalama (`Ctrl+C`).
-- **Dışa Aktarma Seçenekleri**: Yüksek çözünürlüklü PNG, JPEG ve WebP formatlarında indirme (`Ctrl+S`).
-- **Klavye Kısayolları**: V (Seç), P (Kalem), A (Ok), R (Kutu), O (Daire), H (Vurgu), M (Mozaik), B (Blur), T (Metin), N (Adım), C (Kırp).
+### ⚡ Hızlı İş Akışı, Sağ Dışa Aktarma Paneli (Dock) ve Formatlar
+- **Sağ Dışa Aktarma Kenar Çubuğu (Export Dock)**:
+  - Görsel formatı hapları (`PNG`, `JPG`, `WebP`) ile anında format değiştirme.
+  - Büyük, dokunsal **Panoya Kopyala** (`Ctrl+C`) ve **Resmi İndir** (`Ctrl+S`) butonları.
+  - Canlı görsel çözünürlüğü, en-boy oranı (aspect ratio) ve aktif renk özeti kartı.
+  - Açılıp kapanabilir (toggle/collapse) esnek dock düzeni.
+- **Klavye Kısayolları**: V (Seç), P (Kalem), A (Ok), R (Kutu), O (Daire), H (Vurgu), M (Mozaik), B (Blur), T (Metin), N (Adım), C (Kırp), I (Damlalık).
 - **Yerel Çoklu Dil (i18n)**: Türkçe ve İngilizce tam dil desteği.
 
 ---
