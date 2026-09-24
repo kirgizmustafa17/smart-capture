@@ -87,6 +87,17 @@ smart-capture/
 
 ---
 
+## 📌 Versioning
+
+This project adheres strictly to [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
+- **MAJOR**: Breaking architectural changes or incompatible extension updates.
+- **MINOR**: New backward-compatible features and tools.
+- **PATCH**: Backward-compatible bug fixes and performance improvements.
+
+The canonical version is maintained in `manifest.json`.
+
+---
+
 ## 📄 License
 
 MIT License © 2026 Mustafa Kırgız
