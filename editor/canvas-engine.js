@@ -20,6 +20,14 @@ window.SmartEditor = (function () {
   const undoStack = [];
   const redoStack = [];
   let onHistoryChangeCallback = null;
+  let activeTextCommit = null;
+
+  function commitActiveText() {
+    if (typeof activeTextCommit === 'function') {
+      activeTextCommit();
+      activeTextCommit = null;
+    }
+  }
 
   function initEditor(canvasElement, imageSrc, onHistoryChange) {
     activeCanvas = canvasElement;
@@ -27,6 +35,7 @@ window.SmartEditor = (function () {
     undoStack.length = 0;
     redoStack.length = 0;
     stepCounter = 1;
+    activeTextCommit = null;
     onHistoryChangeCallback = onHistoryChange || null;
 
     const img = new Image();
@@ -43,6 +52,9 @@ window.SmartEditor = (function () {
   }
 
   function setTool(toolName) {
+    if (currentTool === 'text' && toolName !== 'text') {
+      commitActiveText();
+    }
     currentTool = toolName;
   }
 
@@ -63,6 +75,7 @@ window.SmartEditor = (function () {
   }
 
   function undo() {
+    commitActiveText();
     if (!activeCtx || undoStack.length <= 1) return;
     const currentState = undoStack.pop();
     redoStack.push(currentState);
@@ -80,6 +93,7 @@ window.SmartEditor = (function () {
   }
 
   function redo() {
+    commitActiveText();
     if (!activeCtx || redoStack.length === 0) return;
     const nextState = redoStack.pop();
     undoStack.push(nextState);
@@ -93,6 +107,7 @@ window.SmartEditor = (function () {
   }
 
   function resetToOriginal() {
+    commitActiveText();
     if (!activeCtx || undoStack.length === 0) return;
     const originalState = undoStack[0];
     undoStack.length = 0;
@@ -151,7 +166,9 @@ window.SmartEditor = (function () {
     }
 
     if (currentTool === 'text') {
-      promptInlineText(startX, startY, e.clientX, e.clientY);
+      e.preventDefault();
+      e.stopPropagation();
+      promptInlineText(startX, startY);
       return;
     }
 
@@ -307,7 +324,8 @@ window.SmartEditor = (function () {
   }
 
   function drawStepBadge(x, y, number) {
-    const radius = Math.max(14, currentStrokeWidth * 3.5);
+    const sizeMap = { 2: 14, 4: 20, 8: 28 };
+    const radius = sizeMap[currentStrokeWidth] || Math.max(12, Math.round(10 + currentStrokeWidth * 2.25));
     activeCtx.save();
 
     // Badge circle
@@ -322,24 +340,28 @@ window.SmartEditor = (function () {
 
     // White rim
     activeCtx.strokeStyle = '#ffffff';
-    activeCtx.lineWidth = 2;
+    activeCtx.lineWidth = Math.max(1.5, Math.round(radius * 0.1));
     activeCtx.shadowBlur = 0;
     activeCtx.stroke();
 
     // Number text
+    const strNum = String(number);
+    const fontRatio = strNum.length > 1 ? 0.9 : 1.15;
     activeCtx.fillStyle = '#ffffff';
-    activeCtx.font = `bold ${Math.round(radius * 1.15)}px -apple-system, sans-serif`;
+    activeCtx.font = `bold ${Math.round(radius * fontRatio)}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
     activeCtx.textAlign = 'center';
     activeCtx.textBaseline = 'middle';
-    activeCtx.fillText(String(number), x, y + 1);
+    activeCtx.fillText(strNum, x, y + 1);
 
     activeCtx.restore();
   }
 
-  function promptInlineText(canvasX, canvasY, clientX, clientY) {
+  function promptInlineText(canvasX, canvasY) {
+    // Commit any currently open text box before opening a new one
+    commitActiveText();
+
     const inputEl = document.getElementById('canvas-inline-text-input');
     if (!inputEl) {
-      // Fallback
       const text = prompt("Metin girin:");
       if (text) {
         renderTextOnCanvas(text, canvasX, canvasY);
@@ -348,49 +370,74 @@ window.SmartEditor = (function () {
       return;
     }
 
-    const wrapper = document.getElementById('canvas-wrapper');
-    const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : { left: 0, top: 0 };
+    const fontSize = Math.max(16, Math.round(currentStrokeWidth * 5.5));
 
-    inputEl.style.left = `${clientX - wrapperRect.left}px`;
-    inputEl.style.top = `${clientY - wrapperRect.top}px`;
+    inputEl.style.left = `${Math.round(canvasX)}px`;
+    inputEl.style.top = `${Math.round(canvasY)}px`;
+    inputEl.style.fontSize = `${fontSize}px`;
+    inputEl.style.color = currentColor;
+    inputEl.style.borderColor = currentColor;
     inputEl.value = '';
     inputEl.classList.remove('hidden');
-    inputEl.focus();
 
-    const commitText = () => {
+    let isCommitted = false;
+    const openingTime = Date.now();
+
+    const finish = (shouldRender) => {
+      if (isCommitted) return;
+      isCommitted = true;
+      activeTextCommit = null;
+
       const text = inputEl.value.trim();
       inputEl.classList.add('hidden');
-      inputEl.removeEventListener('blur', commitText);
+      inputEl.removeEventListener('blur', onBlur);
       inputEl.removeEventListener('keydown', onKey);
 
-      if (text) {
-        renderTextOnCanvas(text, canvasX, canvasY);
+      if (shouldRender && text) {
+        renderTextOnCanvas(text, canvasX, canvasY, fontSize);
         saveState();
       }
     };
 
+    activeTextCommit = () => finish(true);
+
+    const onBlur = () => {
+      // Ignore blur within 250ms of opening so click event resolution doesn't hide it prematurely
+      if (Date.now() - openingTime < 250) {
+        inputEl.focus();
+        return;
+      }
+      finish(true);
+    };
+
     const onKey = (e) => {
       if (e.key === 'Enter') {
-        commitText();
+        e.preventDefault();
+        finish(true);
       } else if (e.key === 'Escape') {
-        inputEl.classList.add('hidden');
-        inputEl.removeEventListener('blur', commitText);
-        inputEl.removeEventListener('keydown', onKey);
+        e.preventDefault();
+        finish(false);
       }
     };
 
-    inputEl.addEventListener('blur', commitText);
+    inputEl.addEventListener('blur', onBlur);
     inputEl.addEventListener('keydown', onKey);
+
+    setTimeout(() => {
+      inputEl.focus();
+    }, 20);
   }
 
-  function renderTextOnCanvas(text, x, y) {
+  function renderTextOnCanvas(text, x, y, size) {
     activeCtx.save();
-    const fontSize = Math.max(18, currentStrokeWidth * 6);
-    activeCtx.font = `bold ${fontSize}px -apple-system, sans-serif`;
+    const fontSize = size || Math.max(16, Math.round(currentStrokeWidth * 5.5));
+    activeCtx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
     activeCtx.fillStyle = currentColor;
-    activeCtx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-    activeCtx.shadowBlur = 5;
-    activeCtx.shadowOffsetY = 2;
+    activeCtx.textBaseline = 'top';
+    activeCtx.textAlign = 'left';
+    activeCtx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+    activeCtx.shadowBlur = 4;
+    activeCtx.shadowOffsetY = 1;
     activeCtx.fillText(text, x, y);
     activeCtx.restore();
   }
@@ -441,6 +488,7 @@ window.SmartEditor = (function () {
   }
 
   function cropToRect(x, y, width, height) {
+    commitActiveText();
     if (!activeCanvas || !activeCtx || width <= 10 || height <= 10) return;
 
     const tempCanvas = document.createElement('canvas');
@@ -458,6 +506,7 @@ window.SmartEditor = (function () {
   }
 
   function getEditedDataURL(format = 'image/png', quality = 0.94) {
+    commitActiveText();
     if (!activeCanvas) return '';
     return activeCanvas.toDataURL(format, quality);
   }
