@@ -209,6 +209,13 @@ function updateActiveColorUI(hex) {
     }
   }
 
+  const customColorInput = document.getElementById('custom-color-input');
+  if (customColorInput && hex.startsWith('#') && (hex.length === 7 || hex.length === 4)) {
+    try {
+      customColorInput.value = hex;
+    } catch (_) {}
+  }
+
   const dockSwatch = document.getElementById('dock-color-swatch');
   const dockHex = document.getElementById('dock-color-hex');
   if (dockSwatch) dockSwatch.style.backgroundColor = hex;
@@ -224,6 +231,17 @@ function setupColorPalette() {
       if (window.SmartEditor) SmartEditor.setColor(color);
     });
   });
+
+  const customColorInput = document.getElementById('custom-color-input');
+  if (customColorInput) {
+    const onCustomColorChange = (e) => {
+      const color = e.target.value;
+      updateActiveColorUI(color);
+      if (window.SmartEditor) SmartEditor.setColor(color);
+    };
+    customColorInput.addEventListener('input', onCustomColorChange);
+    customColorInput.addEventListener('change', onCustomColorChange);
+  }
 
   if (window.SmartEditor) {
     SmartEditor.setOnColorPicked((hex) => {

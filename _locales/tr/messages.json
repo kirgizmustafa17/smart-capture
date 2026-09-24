@@ -20,35 +20,35 @@
     "description": "Stüdyo butonu metni"
   },
   "modeBlock": {
-    "message": "Blok / Öğe Seçimi",
+    "message": "Öğe / Blok",
     "description": "Blok öğe seçimi modu başlığı"
   },
   "modeBlockDesc": {
-    "message": "Sayfadaki grafik, başlık, kart veya alanların üzerine gelerek tek tıkla yakalayın.",
+    "message": "DOM bloklarını üzerine gelerek seçin",
     "description": "Blok mod açıklaması"
   },
   "modeArea": {
-    "message": "Dörtgen Alan",
+    "message": "Seçim Alanı",
     "description": "Dörtgen alan modu"
   },
   "modeAreaDesc": {
-    "message": "Fare ile sürükleyerek istediğiniz dikdörtgen bölgeyi seçin ve kırpın.",
+    "message": "Sürükleyip dikdörtgen kırpın",
     "description": "Dörtgen alan mod açıklaması"
   },
   "modeFreehand": {
-    "message": "Serbest Çizim",
+    "message": "Serbest Kement",
     "description": "Serbest çizim lassosu"
   },
   "modeFreehandDesc": {
-    "message": "Çizim yaparak dilediğiniz özel şekilli bölgeyi kırpın.",
+    "message": "Lasso ile serbest çizip kırpın",
     "description": "Serbest çizim mod açıklaması"
   },
   "modeVisible": {
-    "message": "Görünen Bölge",
+    "message": "Görünen Ekran",
     "description": "Görünen ekran görüntüsü"
   },
   "modeVisibleDesc": {
-    "message": "Ekranınızda anlık görünen kısmın yüksek çözünürlüklü görüntüsünü alın.",
+    "message": "Anlık ekranı doğrudan yakalayın",
     "description": "Görünen alan açıklaması"
   },
   "modeFullPage": {
@@ -56,7 +56,7 @@
     "description": "Tüm sayfa modu"
   },
   "modeFullPageDesc": {
-    "message": "Sayfayı otomatik kaydırarak baştan sona tüm içeriği yakalayın.",
+    "message": "Otomatik kaydırmalı tam sayfa",
     "description": "Tüm sayfa açıklaması"
   },
   "btnCopy": {

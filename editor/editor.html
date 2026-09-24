@@ -22,7 +22,6 @@
           <div class="brand-text">
             <div class="brand-title">
               <h1>SmartCapture Studio</h1>
-              <span class="badge-pro">PRO</span>
             </div>
             <div class="meta-row">
               <span id="image-dimensions-info" class="meta-dim">Yükleniyor...</span>
@@ -38,101 +37,93 @@
         <!-- Main Tool Group -->
         <div class="tool-group" role="toolbar" aria-label="Çizim Araçları">
           <button class="tool-btn active" data-tool="select" title="Seç & Taşı (V)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m3 3 7 18 3-7 7-3L3 3z"/>
               <path d="m13 13 6 6"/>
             </svg>
-            <span class="btn-label" data-i18n="toolSelect">Seç</span>
           </button>
 
+          <button class="tool-btn" data-tool="crop" title="Görseli Kırp (C)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2v14a2 2 0 0 0 2 2h14"/>
+              <path d="M18 22V8a2 2 0 0 0-2-2H2"/>
+            </svg>
+          </button>
+
+          <button class="tool-btn" data-tool="eyedropper" title="Damlalık / Renk Seçici (I)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m14 2 4 4L7 17H3v-4L14 2z"/>
+              <path d="m13 5 4 4"/>
+              <line x1="2" y1="22" x2="6" y2="18"/>
+            </svg>
+          </button>
+
+          <div class="toolbar-sep"></div>
+
           <button class="tool-btn" data-tool="pen" title="Serbest Çizim Kalemi (P)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 19l7-7 3 3-7 7-3-3z"/>
               <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
             </svg>
-            <span class="btn-label" data-i18n="toolPen">Kalem</span>
           </button>
 
           <button class="tool-btn" data-tool="arrow" title="Ok Çiz (A)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="19" x2="19" y2="5"/>
               <polyline points="9 5 19 5 19 15"/>
             </svg>
-            <span class="btn-label" data-i18n="toolArrow">Ok</span>
           </button>
 
           <button class="tool-btn" data-tool="rect" title="Dikdörtgen Kutu (R)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect width="18" height="18" x="3" y="3" rx="2"/>
             </svg>
-            <span class="btn-label" data-i18n="toolRect">Kutu</span>
           </button>
 
           <button class="tool-btn" data-tool="circle" title="Daire / Elips (O)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="9"/>
             </svg>
-            <span class="btn-label" data-i18n="toolCircle">Daire</span>
+          </button>
+
+          <div class="toolbar-sep"></div>
+
+          <button class="tool-btn" data-tool="text" title="Metin Ekle (T)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 7 4 4 20 4 20 7"/>
+              <line x1="9" y1="20" x2="15" y2="20"/>
+              <line x1="12" y1="4" x2="12" y2="20"/>
+            </svg>
+          </button>
+
+          <button class="tool-btn" data-tool="step" title="Numaralı Adım İşareti (N)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 8v8"/>
+              <path d="M10 10l2-2"/>
+            </svg>
           </button>
 
           <button class="tool-btn" data-tool="highlighter" title="Vurgulayıcı Fosfor (H)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m9 11-6 6v3h3l6-6"/>
               <path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/>
             </svg>
-            <span class="btn-label" data-i18n="toolHighlighter">Vurgu</span>
           </button>
 
           <button class="tool-btn" data-tool="mosaic" title="Pikselli Mozaik Sansürü (M)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect width="7" height="7" x="3" y="3" rx="1"/>
               <rect width="7" height="7" x="14" y="3" rx="1"/>
               <rect width="7" height="7" x="14" y="14" rx="1"/>
               <rect width="7" height="7" x="3" y="14" rx="1"/>
             </svg>
-            <span class="btn-label" data-i18n="toolMosaic">Mozaik</span>
           </button>
 
           <button class="tool-btn" data-tool="blur" title="Hassas Yumuşak Blur (B)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
             </svg>
-            <span class="btn-label" data-i18n="toolBlur">Blur</span>
-          </button>
-
-          <button class="tool-btn" data-tool="text" title="Metin Ekle (T)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="4 7 4 4 20 4 20 7"/>
-              <line x1="9" y1="20" x2="15" y2="20"/>
-              <line x1="12" y1="4" x2="12" y2="20"/>
-            </svg>
-            <span class="btn-label" data-i18n="toolText">Yazı</span>
-          </button>
-
-          <button class="tool-btn" data-tool="step" title="Numaralı Adım İşareti (N)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 8v8"/>
-              <path d="M10 10l2-2"/>
-            </svg>
-            <span class="btn-label" data-i18n="toolStep">Adım</span>
-          </button>
-
-          <button class="tool-btn" data-tool="crop" title="Görseli Kırp (C)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 2v14a2 2 0 0 0 2 2h14"/>
-              <path d="M18 22V8a2 2 0 0 0-2-2H2"/>
-            </svg>
-            <span class="btn-label" data-i18n="toolCrop">Kırp</span>
-          </button>
-
-          <button class="tool-btn" data-tool="eyedropper" title="Renk Seçici Damlalık (I)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m14 2 4 4L7 17H3v-4L14 2z"/>
-              <path d="m13 5 4 4"/>
-              <line x1="2" y1="22" x2="6" y2="18"/>
-            </svg>
-            <span class="btn-label" data-i18n="toolEyedropper">Damlalık</span>
           </button>
         </div>
 
@@ -163,6 +154,15 @@
           <button class="color-dot" data-color="#ffffff" style="--swatch-color: #ffffff;" title="Beyaz" aria-label="Beyaz"></button>
           <button class="color-dot dark-swatch" data-color="#0f172a" style="--swatch-color: #0f172a;" title="Siyah" aria-label="Siyah"></button>
           <button id="picked-color-dot" class="color-dot picked-swatch hidden" data-color="#ef4444" style="--swatch-color: #ef4444;" title="Damlalık ile Seçilen Renk" aria-label="Damlalık ile Seçilen Renk"></button>
+          <label class="color-dot color-picker-custom" title="Özel Renk Seç (Tüm Renkler)" aria-label="Özel Renk Seç">
+            <input type="color" id="custom-color-input" value="#ef4444" class="sr-only">
+            <span class="color-custom-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+            </span>
+          </label>
         </div>
 
         <div class="toolbar-divider"></div>

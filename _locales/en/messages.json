@@ -20,19 +20,19 @@
     "description": "Studio button text"
   },
   "modeBlock": {
-    "message": "Element / Block Selector",
+    "message": "Element / Block",
     "description": "Block selector mode title"
   },
   "modeBlockDesc": {
-    "message": "Hover over charts, headers, cards or elements to capture them with one click.",
+    "message": "Snap any element or component on hover",
     "description": "Block mode description"
   },
   "modeArea": {
-    "message": "Rectangle Area",
+    "message": "Selection Area",
     "description": "Rectangle area mode"
   },
   "modeAreaDesc": {
-    "message": "Drag to select any rectangular region on your screen to crop.",
+    "message": "Click and drag to crop rectangle",
     "description": "Rectangle area mode description"
   },
   "modeFreehand": {
@@ -40,15 +40,15 @@
     "description": "Freehand lasso capture"
   },
   "modeFreehandDesc": {
-    "message": "Draw custom shapes to crop precisely what you need.",
+    "message": "Draw organic freehand contours",
     "description": "Freehand lasso description"
   },
   "modeVisible": {
-    "message": "Visible Viewport",
+    "message": "Current Screen",
     "description": "Visible area screenshot"
   },
   "modeVisibleDesc": {
-    "message": "Capture the currently visible portion of your browser screen.",
+    "message": "Instantly capture visible viewport",
     "description": "Visible area description"
   },
   "modeFullPage": {
@@ -56,7 +56,7 @@
     "description": "Full page mode"
   },
   "modeFullPageDesc": {
-    "message": "Automatically scroll and capture the entire webpage from top to bottom.",
+    "message": "Scroll and stitch entire webpage",
     "description": "Full page description"
   },
   "btnCopy": {

@@ -110,15 +110,16 @@ html, body {
 }
 
 .brand-badge {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  background: #1e1b4b;
+  border: 1px solid rgba(99, 102, 241, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  box-shadow: var(--shadow-sm);
+  color: #a5b4fc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
 }
 
@@ -135,22 +136,14 @@ html, body {
 }
 
 .brand-title h1 {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
   color: #ffffff;
   letter-spacing: -0.2px;
 }
 
 .badge-pro {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 700;
-  color: #67e8f9;
-  background: rgba(6, 182, 212, 0.15);
-  border: 1px solid rgba(6, 182, 212, 0.3);
-  padding: 1px 5px;
-  border-radius: 4px;
-  letter-spacing: 0.5px;
+  display: none;
 }
 
 .meta-row {
@@ -176,10 +169,10 @@ html, body {
 .header-center {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: var(--bg-toolbar);
-  padding: 4px 10px;
-  border-radius: 12px;
+  padding: 3px 6px;
+  border-radius: 10px;
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-sm);
 }
@@ -191,19 +184,20 @@ html, body {
 }
 
 .tool-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 6px;
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-secondary);
-  padding: 5px 9px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
   outline: none;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  position: relative;
 }
 
 .tool-btn:hover {
@@ -212,13 +206,14 @@ html, body {
 }
 
 .tool-btn:active {
-  transform: scale(0.96);
+  transform: scale(0.94);
 }
 
 .tool-btn.active {
-  background: rgba(99, 102, 241, 0.25);
-  border-color: var(--border-active);
-  color: #ffffff;
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.5);
+  color: #818cf8;
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25);
 }
 
 .tool-btn:focus-visible {
@@ -226,14 +221,16 @@ html, body {
 }
 
 .btn-label {
-  font-size: 11px;
-  letter-spacing: -0.1px;
+  display: none;
 }
 
+.toolbar-sep,
 .toolbar-divider {
   width: 1px;
-  height: 20px;
+  height: 18px;
   background: var(--border-subtle);
+  margin: 0 4px;
+  flex-shrink: 0;
 }
 
 /* Stroke Width Group */
@@ -328,6 +325,54 @@ html, body {
 
 .color-dot.dark-swatch.active {
   border-color: #ffffff;
+}
+
+.color-picker-custom {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
+  flex-shrink: 0;
+}
+
+.color-picker-custom input[type="color"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.custom-color-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255, 255, 255, 0.4);
+  background: conic-gradient(from 0deg, #ef4444, #f59e0b, #10b981, #06b6d4, #6366f1, #d946ef, #ef4444);
+  display: block;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.color-picker-custom:hover .custom-color-swatch {
+  transform: scale(1.18);
+  border-color: #ffffff;
+}
+
+.custom-color-swatch.active {
+  border: 2px solid #ffffff;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
 }
 
 /* History buttons */
@@ -458,7 +503,9 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #080c14;
+  background-color: #090d16;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 .canvas-viewport {
@@ -860,9 +907,10 @@ html, body {
 }
 
 .btn-dock-primary {
-  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  background: #4f46e5;
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .btn-dock-primary .btn-dock-chip {
@@ -872,9 +920,10 @@ html, body {
 }
 
 .btn-dock-primary:hover {
-  background: linear-gradient(135deg, #4338ca 0%, #2563eb 100%);
+  background: #4338ca;
+  border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .btn-dock-primary:active {
@@ -882,7 +931,7 @@ html, body {
 }
 
 .btn-dock-secondary {
-  background: var(--bg-toolbar);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow-sm);
@@ -895,9 +944,9 @@ html, body {
 }
 
 .btn-dock-secondary:hover {
-  background: var(--bg-control-hover);
+  background: rgba(255, 255, 255, 0.09);
   color: #ffffff;
-  border-color: #475569;
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 

@@ -12,7 +12,7 @@
     <header class="popup-header">
       <div class="brand">
         <div class="brand-badge">
-          <svg class="brand-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="brand-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
             <circle cx="12" cy="13" r="4"/>
           </svg>
@@ -20,7 +20,7 @@
         <div class="brand-info">
           <div class="brand-title-row">
             <h1 id="app-title">SmartCapture</h1>
-            <span class="badge-pro" data-i18n="badgePro">PRO</span>
+            <span class="version-tag">v1.1</span>
           </div>
           <p id="app-subtitle" data-i18n="appDesc">Hassas Ekran Yakalama & Düzenleyici</p>
         </div>
@@ -28,143 +28,153 @@
     </header>
 
     <!-- Main Mode Selection -->
-    <section class="mode-section">
-      <!-- Featured Block Selector -->
-      <div class="mode-card featured" data-mode="BLOCK" tabindex="0" role="button">
-        <div class="mode-icon-wrapper">
-          <svg class="mode-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4"/>
-            <circle cx="12" cy="12" r="3"/>
-            <line x1="12" y1="5" x2="12" y2="7"/>
-            <line x1="12" y1="17" x2="12" y2="19"/>
-            <line x1="5" y1="12" x2="7" y2="12"/>
-            <line x1="17" y1="12" x2="19" y2="12"/>
+    <main class="mode-section" role="region" aria-label="Yakalama Modları">
+      <!-- Mode 1: Element / Block -->
+      <div class="mode-card" data-mode="BLOCK" tabindex="0" role="button">
+        <div class="mode-icon-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="3"/>
+            <path d="M9 3v18"/>
+            <path d="M15 9h6"/>
+            <path d="M15 15h6"/>
           </svg>
         </div>
         <div class="mode-content">
-          <div class="mode-header">
-            <h3 data-i18n="modeBlock">Blok / Öğe Seçimi</h3>
-            <span class="key-hint">1</span>
+          <div class="mode-title-row">
+            <span class="mode-title" data-i18n="modeBlock">Öğe / Blok</span>
+            <kbd class="mode-key">1</kbd>
           </div>
-          <p data-i18n="modeBlockDesc">Sayfadaki grafik, tablo ve DOM bloklarını üzerine gelerek tek tıkla yakalayın.</p>
+          <span class="mode-desc" data-i18n="modeBlockDesc">DOM bloklarını üzerine gelerek seçin</span>
         </div>
-        <div class="card-arrow">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
+      </div>
+
+      <!-- Mode 2: Rectangle Area -->
+      <div class="mode-card" data-mode="AREA" tabindex="0" role="button">
+        <div class="mode-icon-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 3H3v2"/>
+            <path d="M9 3h2"/>
+            <path d="M15 3h2"/>
+            <path d="M19 3h2v2"/>
+            <path d="M21 9v2"/>
+            <path d="M21 15v2"/>
+            <path d="M21 19v2h-2"/>
+            <path d="M15 21h-2"/>
+            <path d="M9 21H7"/>
+            <path d="M5 21H3v-2"/>
+            <path d="M3 15v-2"/>
+            <path d="M3 9V7"/>
           </svg>
         </div>
-      </div>
-
-      <!-- Grid for Secondary Modes -->
-      <div class="mode-grid">
-        <div class="mode-card" data-mode="AREA" tabindex="0" role="button">
-          <div class="mode-card-top">
-            <div class="mode-icon-wrapper">
-              <svg class="mode-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 2v14a2 2 0 0 0 2 2h14"/>
-                <path d="M18 22V8a2 2 0 0 0-2-2H2"/>
-              </svg>
-            </div>
-            <span class="key-hint">2</span>
+        <div class="mode-content">
+          <div class="mode-title-row">
+            <span class="mode-title" data-i18n="modeArea">Seçim Alanı</span>
+            <kbd class="mode-key">2</kbd>
           </div>
-          <div class="mode-content">
-            <h3 data-i18n="modeArea">Dörtgen Alan</h3>
-            <p data-i18n="modeAreaDesc">Sürükleyerek alan seçin.</p>
-          </div>
-        </div>
-
-        <div class="mode-card" data-mode="FREEHAND" tabindex="0" role="button">
-          <div class="mode-card-top">
-            <div class="mode-icon-wrapper">
-              <svg class="mode-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 19l7-7 3 3-7 7-3-3z"/>
-                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
-                <circle cx="12" cy="12" r="1"/>
-              </svg>
-            </div>
-            <span class="key-hint">3</span>
-          </div>
-          <div class="mode-content">
-            <h3 data-i18n="modeFreehand">Serbest Çizim</h3>
-            <p data-i18n="modeFreehandDesc">Lasso ile özel şekil kırpın.</p>
-          </div>
-        </div>
-
-        <div class="mode-card" data-mode="VISIBLE" tabindex="0" role="button">
-          <div class="mode-card-top">
-            <div class="mode-icon-wrapper">
-              <svg class="mode-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="20" height="14" x="2" y="3" rx="2"/>
-                <line x1="8" y1="21" x2="16" y2="21"/>
-                <line x1="12" y1="17" x2="12" y2="21"/>
-              </svg>
-            </div>
-            <span class="key-hint">4</span>
-          </div>
-          <div class="mode-content">
-            <h3 data-i18n="modeVisible">Görünen Bölge</h3>
-            <p data-i18n="modeVisibleDesc">Ekrandaki kısmı yakalayın.</p>
-          </div>
-        </div>
-
-        <div class="mode-card" data-mode="FULLPAGE" tabindex="0" role="button">
-          <div class="mode-card-top">
-            <div class="mode-icon-wrapper">
-              <svg class="mode-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="12" y1="18" x2="12" y2="12"/>
-                <polyline points="9 15 12 18 15 15"/>
-              </svg>
-            </div>
-            <span class="key-hint">5</span>
-          </div>
-          <div class="mode-content">
-            <h3 data-i18n="modeFullPage">Tüm Sayfa</h3>
-            <p data-i18n="modeFullPageDesc">Kaydırıp birleştirin.</p>
-          </div>
+          <span class="mode-desc" data-i18n="modeAreaDesc">Sürükleyip dikdörtgen kırpın</span>
         </div>
       </div>
-    </section>
 
-    <!-- Quick Settings Section -->
-    <section class="settings-section">
-      <div class="setting-item">
-        <div class="setting-text">
-          <span class="setting-label" data-i18n="settingAutoCopy">Otomatik Panoya Kopyala</span>
-          <span class="setting-subtext" data-i18n="settingAutoCopySubtext">Yakalama sonrası doğrudan panoya kopyala</span>
+      <!-- Mode 3: Freehand Lasso -->
+      <div class="mode-card" data-mode="FREEHAND" tabindex="0" role="button">
+        <div class="mode-icon-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+          </svg>
         </div>
-        <label class="switch" aria-label="Otomatik Kopyala">
+        <div class="mode-content">
+          <div class="mode-title-row">
+            <span class="mode-title" data-i18n="modeFreehand">Serbest Kement</span>
+            <kbd class="mode-key">3</kbd>
+          </div>
+          <span class="mode-desc" data-i18n="modeFreehandDesc">Lasso ile serbest çizip kırpın</span>
+        </div>
+      </div>
+
+      <!-- Mode 4: Visible Viewport -->
+      <div class="mode-card" data-mode="VISIBLE" tabindex="0" role="button">
+        <div class="mode-icon-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="14" x="2" y="3" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="mode-content">
+          <div class="mode-title-row">
+            <span class="mode-title" data-i18n="modeVisible">Görünen Ekran</span>
+            <kbd class="mode-key">4</kbd>
+          </div>
+          <span class="mode-desc" data-i18n="modeVisibleDesc">Anlık ekranı doğrudan yakalayın</span>
+        </div>
+      </div>
+
+      <!-- Mode 5: Fullpage Stitching -->
+      <div class="mode-card" data-mode="FULLPAGE" tabindex="0" role="button">
+        <div class="mode-icon-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <polyline points="9 15 12 18 15 15"/>
+          </svg>
+        </div>
+        <div class="mode-content">
+          <div class="mode-title-row">
+            <span class="mode-title" data-i18n="modeFullPage">Tüm Sayfa</span>
+            <kbd class="mode-key">5</kbd>
+          </div>
+          <span class="mode-desc" data-i18n="modeFullPageDesc">Otomatik kaydırmalı tam sayfa</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Studio Launcher Action -->
+    <div class="studio-section">
+      <button id="btn-open-studio" class="studio-launch-btn" type="button">
+        <div class="studio-btn-left">
+          <div class="studio-icon-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+          </div>
+          <div class="studio-btn-text">
+            <span class="studio-btn-title">Stüdyo Editörünü Aç</span>
+            <span class="studio-btn-sub">Vektör çizim, filtreler ve kırpma</span>
+          </div>
+        </div>
+        <svg class="studio-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Quick Preferences Strip -->
+    <section class="pref-strip" aria-label="Hızlı Ayarlar">
+      <div class="pref-item">
+        <span class="pref-label" data-i18n="settingAutoCopy">Panoya Kopyala</span>
+        <label class="switch-micro" aria-label="Otomatik Panoya Kopyala">
           <input type="checkbox" id="toggle-autocopy">
-          <span class="slider"></span>
+          <span class="slider-micro"></span>
         </label>
       </div>
-
-      <div class="setting-item">
-        <div class="setting-text">
-          <span class="setting-label" data-i18n="settingAutoDownload">Otomatik İndir</span>
-          <span class="setting-subtext" data-i18n="settingAutoDownloadSubtext">Görseli doğrudan bilgisayara kaydet</span>
-        </div>
-        <label class="switch" aria-label="Otomatik İndir">
+      <div class="pref-divider"></div>
+      <div class="pref-item">
+        <span class="pref-label" data-i18n="settingAutoDownload">Otomatik İndir</span>
+        <label class="switch-micro" aria-label="Otomatik İndir">
           <input type="checkbox" id="toggle-autodownload">
-          <span class="slider"></span>
+          <span class="slider-micro"></span>
         </label>
       </div>
     </section>
 
     <!-- Footer -->
     <footer class="popup-footer">
-      <div class="footer-status">
-        <span class="status-dot"></span>
-        <span data-i18n="statusReady">Hazır</span>
-      </div>
-      <button id="btn-open-studio" class="footer-action-link" type="button">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 20h9"/>
-          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-        </svg>
-        <span data-i18n="studioAction">Stüdyo</span>
-      </button>
+      <span class="footer-privacy">100% Yerel İşlem • Sıfır İzleme</span>
+      <span class="footer-dot">•</span>
+      <span class="footer-hint">1-5 Kısayolları</span>
     </footer>
   </div>
 
