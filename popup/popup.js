@@ -108,63 +108,13 @@ function initStudioLauncher() {
 }
 
 /**
- * Orchestrate tab script injection and start requested mode
+ * Request background service worker to launch capture mode on active tab
  */
-async function launchMode(mode) {
-  try {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (!tab || !tab.id || !tab.url) {
-      alert(SmartUtils.t('restrictedPageNotice', 'Bu sayfada ekran görüntüsü alınamaz.'));
-      return;
-    }
-
-    // Prevent execution on Chrome/Edge internal system pages
-    if (
-      tab.url.startsWith('chrome://') ||
-      tab.url.startsWith('edge://') ||
-      tab.url.startsWith('chrome-extension://') ||
-      tab.url.includes('chrome.google.com/webstore')
-    ) {
+function launchMode(mode) {
+  chrome.runtime.sendMessage({ action: 'START_MODE', mode }, (response) => {
+    if (response?.error) {
       alert(SmartUtils.t('restrictedPageNotice', 'Chrome güvenlik kısıtlaması nedeniyle bu sistem sayfasında ekran görüntüsü alınamaz.'));
-      return;
     }
-
-    const injectAndRun = () => {
-      chrome.scripting.insertCSS({
-        target: { tabId: tab.id },
-        files: ['content/content.css']
-      }).catch(err => console.warn("CSS insertion notice:", err));
-
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: [
-          'lib/utils.js',
-          'content/inspector.js',
-          'content/area-select.js',
-          'content/freehand-select.js',
-          'content/full-page.js',
-          'content/editor.js',
-          'content/content.js'
-        ]
-      }).then(() => {
-        chrome.tabs.sendMessage(tab.id, { action: 'START_MODE', mode });
-        window.close();
-      }).catch(err => {
-        console.error("Script injection failed:", err);
-        alert("Lütfen sayfayı yenileyip (F5) tekrar deneyin.");
-        window.close();
-      });
-    };
-
-    chrome.tabs.sendMessage(tab.id, { action: 'START_MODE', mode }, () => {
-      if (chrome.runtime.lastError) {
-        injectAndRun();
-      } else {
-        window.close();
-      }
-    });
-  } catch (err) {
-    console.error("Popup trigger error:", err);
     window.close();
-  }
+  });
 }

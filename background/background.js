@@ -55,59 +55,69 @@ function createContextMenus() {
   });
 }
 
+function isRestrictedUrl(url) {
+  return !url ||
+    url.startsWith('chrome://') ||
+    url.startsWith('edge://') ||
+    url.startsWith('chrome-extension://') ||
+    url.includes('chrome.google.com/webstore');
+}
+
+async function triggerModeOnTab(tabId, tabUrl, mode) {
+  if (isRestrictedUrl(tabUrl)) {
+    throw new Error("Restricted system page");
+  }
+
+  try {
+    await chrome.tabs.sendMessage(tabId, { action: 'START_MODE', mode });
+  } catch (e) {
+    // Inject scripts on demand and trigger mode
+    await chrome.scripting.insertCSS({
+      target: { tabId },
+      files: ['content/content.css']
+    }).catch(err => console.warn("CSS insertion notice:", err));
+
+    await chrome.scripting.executeScript({
+      target: { tabId },
+      files: [
+        'lib/utils.js',
+        'content/inspector.js',
+        'content/area-select.js',
+        'content/freehand-select.js',
+        'content/full-page.js',
+        'content/content.js'
+      ]
+    });
+
+    await chrome.tabs.sendMessage(tabId, { action: 'START_MODE', mode });
+  }
+}
+
 // Listen for Right-Click Context Menu item clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (!tab || !tab.id || !tab.url) return;
-
-  // Prevent running on restricted system pages
-  if (
-    tab.url.startsWith('chrome://') ||
-    tab.url.startsWith('edge://') ||
-    tab.url.startsWith('chrome-extension://') ||
-    tab.url.includes('chrome.google.com/webstore')
-  ) {
-    console.warn("SmartCapture cannot run on restricted system pages.");
-    return;
-  }
-
-  if (info.menuItemId.startsWith('mode_')) {
-    const mode = info.menuItemId.replace('mode_', '');
-
-    const injectAndRun = () => {
-      // Insert CSS first
-      chrome.scripting.insertCSS({
-        target: { tabId: tab.id },
-        files: ['content/content.css']
-      }).catch(err => console.warn("CSS insertion notice:", err));
-
-      // Inject JS content scripts
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: [
-          'lib/utils.js',
-          'content/inspector.js',
-          'content/area-select.js',
-          'content/freehand-select.js',
-          'content/full-page.js',
-          'content/editor.js',
-          'content/content.js'
-        ]
-      }).then(() => {
-        chrome.tabs.sendMessage(tab.id, { action: 'START_MODE', mode });
-      }).catch(err => console.error("Script injection failed:", err));
-    };
-
-    // Try sending message to tab content script first
-    chrome.tabs.sendMessage(tab.id, { action: 'START_MODE', mode }, (response) => {
-      if (chrome.runtime.lastError) {
-        injectAndRun();
-      }
-    });
-  }
+  if (!tab || !tab.id || !info.menuItemId.startsWith('mode_')) return;
+  const mode = info.menuItemId.replace('mode_', '');
+  triggerModeOnTab(tab.id, tab.url, mode).catch(err => console.warn("Context menu trigger:", err));
 });
 
-// Handle screenshot capture messages from content scripts
+// Handle screenshot capture and mode messages
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'START_MODE') {
+    chrome.tabs.query({ active: true, currentWindow: true }, async ([tab]) => {
+      if (!tab || !tab.id) {
+        sendResponse({ success: false, error: 'No active tab' });
+        return;
+      }
+      try {
+        await triggerModeOnTab(tab.id, tab.url, message.mode);
+        sendResponse({ success: true });
+      } catch (err) {
+        sendResponse({ success: false, error: err.message });
+      }
+    });
+    return true;
+  }
+
   if (message.action === 'OPEN_EDITOR') {
     if (message.dataUrl) {
       chrome.storage.local.set({ pendingScreenshot: message.dataUrl }, () => {

@@ -83,42 +83,6 @@ window.SmartFreehandSelect = (function () {
     document.removeEventListener('keydown', onKeyDown, true);
   }
 
-  function createSmoothPath(ctxTarget, pts, isClosed = false, scale = 1, offsetX = 0, offsetY = 0) {
-    if (!pts || pts.length < 2) return;
-
-    ctxTarget.beginPath();
-    const startX = (pts[0].x - offsetX) * scale;
-    const startY = (pts[0].y - offsetY) * scale;
-    ctxTarget.moveTo(startX, startY);
-
-    if (pts.length === 2) {
-      ctxTarget.lineTo((pts[1].x - offsetX) * scale, (pts[1].y - offsetY) * scale);
-      if (isClosed) ctxTarget.closePath();
-      return;
-    }
-
-    for (let i = 1; i < pts.length - 1; i++) {
-      const curX = (pts[i].x - offsetX) * scale;
-      const curY = (pts[i].y - offsetY) * scale;
-      const nextX = (pts[i + 1].x - offsetX) * scale;
-      const nextY = (pts[i + 1].y - offsetY) * scale;
-      const midX = (curX + nextX) / 2;
-      const midY = (curY + nextY) / 2;
-
-      ctxTarget.quadraticCurveTo(curX, curY, midX, midY);
-    }
-
-    const lastX = (pts[pts.length - 1].x - offsetX) * scale;
-    const lastY = (pts[pts.length - 1].y - offsetY) * scale;
-
-    if (isClosed) {
-      ctxTarget.quadraticCurveTo(lastX, lastY, startX, startY);
-      ctxTarget.closePath();
-    } else {
-      ctxTarget.lineTo(lastX, lastY);
-    }
-  }
-
   function redraw() {
     if (!ctx) return;
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -132,7 +96,7 @@ window.SmartFreehandSelect = (function () {
     // Cut out smooth path from backdrop
     ctx.save();
     ctx.globalCompositeOperation = 'destination-out';
-    createSmoothPath(ctx, points, true, 1, 0, 0);
+    SmartUtils.createSmoothPath(ctx, points, true, 1, 0, 0);
     ctx.fill();
     ctx.restore();
 
@@ -144,7 +108,7 @@ window.SmartFreehandSelect = (function () {
     ctx.shadowColor = '#06b6d4';
     ctx.shadowBlur = 10;
 
-    createSmoothPath(ctx, points, false, 1, 0, 0);
+    SmartUtils.createSmoothPath(ctx, points, false, 1, 0, 0);
     ctx.stroke();
   }
 

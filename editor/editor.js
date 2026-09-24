@@ -355,7 +355,7 @@ function setupExportActions() {
     copyBtn.addEventListener('click', async () => {
       const format = formatSelect ? formatSelect.value : 'image/png';
       const editedUrl = window.SmartEditor ? SmartEditor.getEditedDataURL(format) : currentImageSrc;
-      const blob = SmartUtils.dataURLToBlob(editedUrl);
+      const blob = await SmartUtils.dataURLToBlob(editedUrl);
 
       const success = await SmartUtils.copyBlobToClipboard(blob);
       if (success) {
@@ -367,10 +367,10 @@ function setupExportActions() {
   }
 
   if (downloadBtn) {
-    downloadBtn.addEventListener('click', () => {
+    downloadBtn.addEventListener('click', async () => {
       const format = formatSelect ? formatSelect.value : 'image/png';
       const editedUrl = window.SmartEditor ? SmartEditor.getEditedDataURL(format) : currentImageSrc;
-      const blob = SmartUtils.dataURLToBlob(editedUrl);
+      const blob = await SmartUtils.dataURLToBlob(editedUrl);
 
       const ext = format === 'image/jpeg' ? 'jpg' : format === 'image/webp' ? 'webp' : 'png';
       const filename = `smartcapture_studio_${new Date().toISOString().slice(0, 10)}_${Date.now().toString().slice(-4)}.${ext}`;
