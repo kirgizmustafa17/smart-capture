@@ -17,7 +17,7 @@
   
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-muted: #8294ac;
   
   --accent-primary: #6366f1;
   --accent-secondary: #06b6d4;
@@ -508,4 +508,31 @@ input:checked + .slider:before {
   color: #ffffff;
   background: rgba(99, 102, 241, 0.18);
   border-color: rgba(99, 102, 241, 0.4);
+}
+
+.footer-action-link:active {
+  transform: scale(0.96);
+}
+
+.footer-action-link:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   ACCESSIBILITY: REDUCED MOTION PREFERENCE
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .status-dot {
+    animation: none !important;
+  }
+  .mode-card:hover {
+    transform: none !important;
+  }
 }

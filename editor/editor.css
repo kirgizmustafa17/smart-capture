@@ -211,6 +211,10 @@ html, body {
   color: #ffffff;
 }
 
+.tool-btn:active {
+  transform: scale(0.96);
+}
+
 .tool-btn.active {
   background: rgba(99, 102, 241, 0.25);
   border-color: var(--border-active);
@@ -250,11 +254,20 @@ html, body {
   justify-content: center;
   cursor: pointer;
   outline: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
 }
 
 .stroke-btn:hover {
   background: var(--bg-control-hover);
+}
+
+.stroke-btn:active {
+  transform: scale(0.94);
+}
+
+.stroke-btn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.45);
+  border-color: var(--border-active);
 }
 
 .stroke-btn.active {
@@ -288,11 +301,19 @@ html, body {
   cursor: pointer;
   outline: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .color-dot:hover {
   transform: scale(1.18);
+}
+
+.color-dot:active {
+  transform: scale(1.05);
+}
+
+.color-dot:focus-visible {
+  box-shadow: 0 0 0 2px var(--bg-toolbar), 0 0 0 4px var(--accent-primary);
 }
 
 .color-dot.active {
@@ -328,12 +349,21 @@ html, body {
   justify-content: center;
   cursor: pointer;
   outline: none;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
 
 .icon-action-btn:hover:not(:disabled) {
   background: var(--bg-control-hover);
   color: #ffffff;
+}
+
+.icon-action-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.icon-action-btn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.45);
+  border-color: var(--border-active);
 }
 
 .icon-action-btn:disabled {
@@ -642,4 +672,16 @@ html, body {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   ACCESSIBILITY: REDUCED MOTION PREFERENCE
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
