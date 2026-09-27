@@ -43,3 +43,8 @@
 - **Level 1 (Cards):** `0 1px 2px rgba(0, 0, 0, 0.3)`
 - **Level 2 (Dropdowns, Floating toolbars):** `0 4px 14px -2px rgba(0, 0, 0, 0.4), 0 2px 6px -1px rgba(0, 0, 0, 0.25)`
 - **Level 3 (Modals & Studio Canvas):** `0 24px 64px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08)`
+
+## Component Standards: PRO Modal & Mockup Controls
+- **Accessible Dialog:** `role="dialog"`, `aria-modal="true"`, focus management on open, dismissible on `Escape` and backdrop click.
+- **Visual Distinction:** Amber gold accent (`#fbbf24`, `rgba(245, 158, 11, 0.12)`) reserved for PRO value propositions and voluntary developer support.
+- **Mockup Studio Canvas Rendering:** Sub-pixel arc rounded corners, layered drop shadows (`rgba(0,0,0,0.65)` blur 48px), and macOS traffic light controls with 0.5px subtle dark borders.

@@ -206,5 +206,33 @@
   "colorPickedSuccess": {
     "message": "Renk seçildi ve kopyalandı",
     "description": "Renk seçici başarı bildirimi"
+  },
+  "mockupTitle": {
+    "message": "Sosyal Medya Mockup",
+    "description": "Mockup çerçeve başlığı"
+  },
+  "btnSupport": {
+    "message": "☕ Destek Ol",
+    "description": "Geliştiriciye destek butonu"
+  },
+  "proModalTitle": {
+    "message": "SmartCapture PRO",
+    "description": "PRO yükseltme modal başlığı"
+  },
+  "proModalSub": {
+    "message": "Profesyonel mockup stüdyosu ve gelişmiş araçlar.",
+    "description": "PRO modal alt başlığı"
+  },
+  "proKeyLabel": {
+    "message": "Lisans Anahtarı",
+    "description": "Lisans anahtarı giriş alanı"
+  },
+  "proActivateBtn": {
+    "message": "Etkinleştir",
+    "description": "Lisans etkinleştir butonu"
+  },
+  "proActiveBadge": {
+    "message": "PRO Aktif",
+    "description": "Aktif pro etiketi"
   }
 }

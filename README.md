@@ -26,11 +26,19 @@
 - **Color & Size Customization**: Rich palette selection with adjustable stroke thickness.
 - **History & Canvas Performance**: Full Undo/Redo stack with optimized `willReadFrequently` Canvas2D rendering.
 
+### 🖼️ Social Media Mockup Frames (PRO)
+- **Gradient Wallpapers**: Eye-catching backdrop presets (*Cosmic Indigo, Velvet Sunset, Emerald Depth, Obsidian Mesh, Modern Slate, Clean White Studio*) designed for X/Twitter, LinkedIn, and presentations.
+- **macOS Window Controls**: Traffic light window header (red, yellow, green dots) or clean minimal border.
+- **Organic Depth & Shadow**: Multi-layered soft and deep drop shadows with custom inner corner rounding and padding.
+- **Freemium Architecture**: Core capture and editing suite is 100% free and offline; Mockup Studio is accessible via PRO license or built-in test evaluation keys.
+
 ### ⚡ Seamless Workflow, Right Export Dock & Multi-Format
 - **Right Export Sidebar / Dock**:
   - One-click format switcher pills (`PNG`, `JPG`, `WebP`).
+  - Mockup frame controls & gradient wallpaper switcher.
   - Tactile **Copy to Clipboard** (`Ctrl+C`) and **Download** (`Ctrl+S`) action buttons.
   - Live image overview card with resolution dimensions, aspect ratio, and active sampled color.
+  - Developer support link (Buy Me a Coffee).
   - Collapsible dock layout with dedicated toggle controls.
 - **Keyboard Shortcuts**: V (Select), P (Pen), A (Arrow), R (Rect), O (Circle), H (Highlight), M (Mosaic), B (Blur), T (Text), N (Step), C (Crop), I (Eyedropper).
 - **i18n Ready**: Native multi-language support (English and Turkish).

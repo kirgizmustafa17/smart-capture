@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModeSelection();
   initShortcuts();
   initStudioLauncher();
+  initLicenseStatus();
 });
 
 /**
@@ -118,3 +119,28 @@ function launchMode(mode) {
     window.close();
   });
 }
+
+/**
+ * Check and reflect license status on popup chip
+ */
+function initLicenseStatus() {
+  const proChip = document.getElementById('popup-pro-chip');
+  if (!proChip || !window.SmartLicense) return;
+
+  SmartLicense.getLicenseStatus().then(status => {
+    if (status.isPro) {
+      proChip.classList.add('is-pro');
+      proChip.textContent = 'PRO ✓';
+    } else {
+      proChip.classList.remove('is-pro');
+      proChip.textContent = 'PRO';
+    }
+  });
+
+  proChip.addEventListener('click', () => {
+    chrome.runtime.sendMessage({ action: 'OPEN_EDITOR' }, () => {
+      window.close();
+    });
+  });
+}
+

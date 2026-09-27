@@ -137,15 +137,30 @@ html, body {
   line-height: 1.2;
 }
 
-.version-tag {
+.version-tag,
+.pro-chip {
   font-family: var(--font-mono);
   font-size: 9.5px;
-  font-weight: 600;
-  color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 1px 4px;
+  font-weight: 700;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 1px 5px;
   border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.pro-chip:hover {
+  background: rgba(245, 158, 11, 0.22);
+  color: #fef08a;
+}
+
+.pro-chip.is-pro {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
 }
 
 .brand-info p {
@@ -452,6 +467,22 @@ html, body {
 
 .footer-privacy {
   font-weight: 500;
+}
+
+.footer-support-link {
+  color: #fbbf24;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: color 0.15s ease;
+  cursor: pointer;
+}
+
+.footer-support-link:hover {
+  color: #fef08a;
+  text-decoration: underline;
 }
 
 .footer-dot {

@@ -1135,7 +1135,13 @@ window.SmartEditor = (function () {
     commitActiveText();
     if (!activeCanvas) return '';
     render(false);
-    const url = activeCanvas.toDataURL(format, quality);
+
+    let exportCanvas = activeCanvas;
+    if (window.SmartMockup && window.SmartMockup.getConfig().enabled) {
+      exportCanvas = window.SmartMockup.renderMockupCanvas(activeCanvas);
+    }
+
+    const url = exportCanvas.toDataURL(format, quality);
     render(true);
     return url;
   }

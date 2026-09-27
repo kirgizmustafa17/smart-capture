@@ -66,6 +66,8 @@ function initStudio() {
     setupCropInteraction();
     setupCursorTracking();
     setupEyedropperLoupe();
+    setupLicenseAndProModal();
+    setupMockupFrameControls();
     initI18n();
   });
 }
@@ -475,6 +477,14 @@ function setupExportActions() {
 
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
+      if (window.SmartMockup && window.SmartMockup.getConfig().enabled) {
+        const license = await SmartLicense.getLicenseStatus();
+        if (!license.isPro) {
+          if (window.openProModal) window.openProModal();
+          return;
+        }
+      }
+
       const format = formatSelect ? formatSelect.value : 'image/png';
       const editedUrl = window.SmartEditor ? SmartEditor.getEditedDataURL(format) : currentImageSrc;
       const blob = await SmartUtils.dataURLToBlob(editedUrl);
@@ -490,6 +500,14 @@ function setupExportActions() {
 
   if (downloadBtn) {
     downloadBtn.addEventListener('click', async () => {
+      if (window.SmartMockup && window.SmartMockup.getConfig().enabled) {
+        const license = await SmartLicense.getLicenseStatus();
+        if (!license.isPro) {
+          if (window.openProModal) window.openProModal();
+          return;
+        }
+      }
+
       const format = formatSelect ? formatSelect.value : 'image/png';
       const editedUrl = window.SmartEditor ? SmartEditor.getEditedDataURL(format) : currentImageSrc;
       const blob = await SmartUtils.dataURLToBlob(editedUrl);
@@ -680,3 +698,181 @@ function setupKeyboardShortcuts() {
     }
   });
 }
+
+/**
+ * License & PRO Modal Management
+ */
+function setupLicenseAndProModal() {
+  const proBadge = document.getElementById('btn-pro-badge');
+  const proBadgeText = document.getElementById('pro-badge-text');
+  const modalBackdrop = document.getElementById('pro-modal-backdrop');
+  const closeBtn = document.getElementById('btn-close-pro-modal');
+  const activateBtn = document.getElementById('btn-activate-pro');
+  const keyInput = document.getElementById('pro-key-input');
+  const statusMsg = document.getElementById('license-status-msg');
+  const testTrialBtn = document.getElementById('btn-test-trial');
+  const dockSupportBtn = document.getElementById('btn-dock-support');
+
+  async function refreshLicenseUI() {
+    if (!window.SmartLicense) return;
+    const status = await SmartLicense.getLicenseStatus();
+    if (status.isPro) {
+      if (proBadge) proBadge.classList.add('is-pro');
+      if (proBadgeText) proBadgeText.textContent = SmartUtils.t('proActiveBadge', 'PRO Aktif');
+    } else {
+      if (proBadge) proBadge.classList.remove('is-pro');
+      if (proBadgeText) proBadgeText.textContent = 'PRO';
+    }
+  }
+
+  window.openProModal = function () {
+    if (!modalBackdrop) return;
+    modalBackdrop.classList.remove('hidden');
+    if (statusMsg) {
+      statusMsg.textContent = '';
+      statusMsg.className = 'license-status-msg';
+    }
+    if (keyInput) {
+      keyInput.value = '';
+      keyInput.focus();
+    }
+  };
+
+  window.closeProModal = function () {
+    if (!modalBackdrop) return;
+    modalBackdrop.classList.add('hidden');
+  };
+
+  if (proBadge) {
+    proBadge.addEventListener('click', () => window.openProModal());
+  }
+
+  if (dockSupportBtn) {
+    dockSupportBtn.addEventListener('click', () => window.openProModal());
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => window.closeProModal());
+  }
+
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) window.closeProModal();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalBackdrop && !modalBackdrop.classList.contains('hidden')) {
+      window.closeProModal();
+    }
+  });
+
+  if (activateBtn && keyInput) {
+    const handleActivation = async () => {
+      const key = keyInput.value.trim();
+      if (!key) {
+        if (statusMsg) {
+          statusMsg.className = 'license-status-msg error';
+          statusMsg.textContent = 'Lütfen bir lisans anahtarı girin.';
+        }
+        return;
+      }
+      try {
+        await SmartLicense.activateLicense(key);
+        if (statusMsg) {
+          statusMsg.className = 'license-status-msg success';
+          statusMsg.textContent = 'PRO lisansınız başarıyla etkinleştirildi!';
+        }
+        await refreshLicenseUI();
+        SmartUtils.showToast('SmartCapture PRO Etkinleştirildi!', 'success');
+        setTimeout(() => window.closeProModal(), 1200);
+      } catch (err) {
+        if (statusMsg) {
+          statusMsg.className = 'license-status-msg error';
+          statusMsg.textContent = err.message || 'Geçersiz lisans anahtarı.';
+        }
+      }
+    };
+
+    activateBtn.addEventListener('click', handleActivation);
+    keyInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleActivation();
+    });
+  }
+
+  if (testTrialBtn) {
+    testTrialBtn.addEventListener('click', async () => {
+      if (!window.SmartLicense) return;
+      await SmartLicense.activateDemoTrial();
+      if (statusMsg) {
+        statusMsg.className = 'license-status-msg success';
+        statusMsg.textContent = 'İnceleme test lisansı aktif edildi!';
+      }
+      await refreshLicenseUI();
+      SmartUtils.showToast('Test Lisansı Etkinleştirildi!', 'success');
+      setTimeout(() => window.closeProModal(), 1200);
+    });
+  }
+
+  refreshLicenseUI();
+}
+
+/**
+ * Mockup Frame Controls (PRO)
+ */
+function setupMockupFrameControls() {
+  const toggle = document.getElementById('toggle-mockup-frame');
+  const controlsGroup = document.getElementById('mockup-controls-group');
+  const presetBtns = document.querySelectorAll('.mockup-preset-btn');
+  const headerBtns = document.querySelectorAll('.mockup-seg-btn[data-header]');
+  const paddingBtns = document.querySelectorAll('.mockup-seg-btn[data-padding]');
+
+  if (!window.SmartMockup) return;
+
+  if (toggle) {
+    toggle.addEventListener('change', async () => {
+      const enabled = toggle.checked;
+      SmartMockup.setConfig({ enabled });
+      if (controlsGroup) {
+        controlsGroup.classList.toggle('hidden', !enabled);
+      }
+
+      if (enabled) {
+        const license = await SmartLicense.getLicenseStatus();
+        if (!license.isPro) {
+          SmartUtils.showToast('Mockup Çerçevesi (PRO Önizleme)', 'info');
+        } else {
+          SmartUtils.showToast('Mockup Çerçevesi Açıldı', 'success');
+        }
+      }
+    });
+  }
+
+  presetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      presetBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const preset = btn.dataset.preset;
+      SmartMockup.setConfig({ preset });
+    });
+  });
+
+  headerBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      headerBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const windowHeader = btn.dataset.header;
+      SmartMockup.setConfig({ windowHeader });
+    });
+  });
+
+  paddingBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      paddingBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const padding = parseInt(btn.dataset.padding, 10);
+      SmartMockup.setConfig({ padding });
+    });
+  });
+}
+

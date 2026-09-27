@@ -206,5 +206,33 @@
   "colorPickedSuccess": {
     "message": "Color picked and copied",
     "description": "Color picked success notification"
+  },
+  "mockupTitle": {
+    "message": "Social Mockup",
+    "description": "Mockup frame title"
+  },
+  "btnSupport": {
+    "message": "☕ Support Dev",
+    "description": "Support developer button"
+  },
+  "proModalTitle": {
+    "message": "SmartCapture PRO",
+    "description": "PRO upgrade modal title"
+  },
+  "proModalSub": {
+    "message": "Professional mockup studio and advanced tools.",
+    "description": "PRO modal subtitle"
+  },
+  "proKeyLabel": {
+    "message": "License Key",
+    "description": "License key input label"
+  },
+  "proActivateBtn": {
+    "message": "Activate",
+    "description": "Activate license button"
+  },
+  "proActiveBadge": {
+    "message": "PRO Active",
+    "description": "Active PRO label"
   }
 }

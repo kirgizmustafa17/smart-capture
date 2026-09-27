@@ -226,6 +226,11 @@
 
         <div class="toolbar-divider"></div>
 
+        <button id="btn-pro-badge" class="btn-pro-status" title="PRO Özellikleri & Lisans" aria-label="PRO Lisans Durumu">
+          <span class="pro-sparkle">★</span>
+          <span id="pro-badge-text">PRO</span>
+        </button>
+
         <button id="btn-toggle-dock" class="btn-dock-toggle" title="Dışa Aktarma Panelini Aç/Kapat" aria-label="Dışa Aktarma Panelini Aç/Kapat">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
@@ -320,6 +325,52 @@
           <p id="format-hint" class="dock-subtext">Kayıpsız piksel kalitesi ve şeffaflık desteği.</p>
         </div>
 
+        <!-- Mockup Frame Section (PRO) -->
+        <div class="dock-section dock-mockup-section">
+          <div class="dock-section-header">
+            <div class="dock-title-with-badge">
+              <span class="dock-label" data-i18n="mockupTitle">Sosyal Mockup</span>
+              <span class="badge-pro-pill">PRO</span>
+            </div>
+            <label class="switch-micro" aria-label="Mockup Çerçevesini Aç/Kapat">
+              <input type="checkbox" id="toggle-mockup-frame">
+              <span class="slider-micro"></span>
+            </label>
+          </div>
+
+          <div id="mockup-controls-group" class="mockup-controls-group hidden">
+            <div class="mockup-row">
+              <span class="mockup-field-label">Arka Plan</span>
+              <div class="mockup-preset-grid" id="mockup-preset-grid">
+                <button type="button" class="mockup-preset-btn active" data-preset="cosmic" title="Kozmik Gece" style="background: linear-gradient(135deg, #0f172a, #312e81, #4338ca);"></button>
+                <button type="button" class="mockup-preset-btn" data-preset="sunset" title="Kadife Günbatımı" style="background: linear-gradient(135deg, #f43f5e, #8b5cf6, #3b82f6);"></button>
+                <button type="button" class="mockup-preset-btn" data-preset="emerald" title="Zümrüt Derinlik" style="background: linear-gradient(135deg, #022c22, #047857, #10b981);"></button>
+                <button type="button" class="mockup-preset-btn" data-preset="obsidian" title="Obsidyen" style="background: linear-gradient(135deg, #090d16, #111827, #1f2937);"></button>
+                <button type="button" class="mockup-preset-btn" data-preset="slate" title="Modern Gri" style="background: linear-gradient(135deg, #1e293b, #334155, #475569);"></button>
+                <button type="button" class="mockup-preset-btn" data-preset="white" title="Açık Stüdyo" style="background: #f8fafc; border: 1px solid #94a3b8;"></button>
+              </div>
+            </div>
+
+            <div class="mockup-row">
+              <span class="mockup-field-label">Pencere Başlığı</span>
+              <div class="mockup-segment">
+                <button type="button" class="mockup-seg-btn active" data-header="mac">macOS</button>
+                <button type="button" class="mockup-seg-btn" data-header="clean">Minimal</button>
+                <button type="button" class="mockup-seg-btn" data-header="none">Yok</button>
+              </div>
+            </div>
+
+            <div class="mockup-row">
+              <span class="mockup-field-label">Boşluk</span>
+              <div class="mockup-segment">
+                <button type="button" class="mockup-seg-btn" data-padding="24">Dar</button>
+                <button type="button" class="mockup-seg-btn active" data-padding="48">Orta</button>
+                <button type="button" class="mockup-seg-btn" data-padding="72">Geniş</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Primary Export Actions -->
         <div class="dock-section dock-actions">
           <button id="btn-copy" class="btn-dock btn-dock-primary" title="Panoya Kopyala (Ctrl+C)">
@@ -365,6 +416,20 @@
             </div>
           </div>
         </div>
+
+        <!-- Support Section -->
+        <div class="dock-section dock-support-section">
+          <button id="btn-dock-support" class="btn-dock-support" type="button">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+            <span data-i18n="btnSupport">☕ Destek Ol</span>
+          </button>
+        </div>
       </aside>
     </div>
 
@@ -398,7 +463,84 @@
     </footer>
   </div>
 
+  <!-- PRO Upgrade & Support Modal -->
+  <div id="pro-modal-backdrop" class="modal-backdrop hidden" role="presentation">
+    <div id="pro-modal" class="pro-modal" role="dialog" aria-modal="true" aria-labelledby="pro-modal-title">
+      <button id="btn-close-pro-modal" class="modal-close-btn" aria-label="Kapat" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="pro-modal-header">
+        <div class="pro-badge-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h2 id="pro-modal-title">SmartCapture PRO</h2>
+        <p class="pro-modal-sub" data-i18n="proModalSub">Profesyonel mockup stüdyosu ve gelişmiş araçlar.</p>
+      </div>
+
+      <div class="pro-perks-list">
+        <div class="pro-perk-item">
+          <div class="pro-perk-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="pro-perk-text">
+            <strong>Sosyal Medya Mockup Çerçeveleri</strong>
+            <span>X (Twitter), LinkedIn ve sunumlar için degradeli macOS pencere şablonları</span>
+          </div>
+        </div>
+        <div class="pro-perk-item">
+          <div class="pro-perk-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="pro-perk-text">
+            <strong>Gelecek Özelliklere Erken Erişim</strong>
+            <span>OCR (Görselden Metin Çıkarma), Bulut Hızlı Paylaşım ve PDF dışa aktarma</span>
+          </div>
+        </div>
+        <div class="pro-perk-item">
+          <div class="pro-perk-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="pro-perk-text">
+            <strong>Geliştiriciyi Destekleyin & 100% Yerel</strong>
+            <span>Sıfır izleme, bağımsız açık kaynak geliştirme ve ömür boyu güncellemeler</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pro-license-box">
+        <label for="pro-key-input" class="pro-input-label" data-i18n="proKeyLabel">Lisans Anahtarı</label>
+        <div class="pro-input-row">
+          <input type="text" id="pro-key-input" class="pro-key-input" placeholder="PRO-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false" />
+          <button id="btn-activate-pro" class="btn-activate-pro" type="button" data-i18n="proActivateBtn">Etkinleştir</button>
+        </div>
+        <div id="license-status-msg" class="license-status-msg"></div>
+      </div>
+
+      <div class="pro-modal-footer">
+        <a href="https://buymeacoffee.com" target="_blank" rel="noopener noreferrer" class="btn-coffee" id="btn-buy-coffee">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+            <line x1="6" y1="1" x2="6" y2="4"/>
+            <line x1="10" y1="1" x2="10" y2="4"/>
+            <line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+          <span data-i18n="btnSupport">☕ Geliştiriciye Destek Ol</span>
+        </a>
+        <button id="btn-test-trial" class="btn-trial-link" type="button">⚡ İnceleme İçin Test Lisansını Etkinleştir</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../lib/utils.js"></script>
+  <script src="../lib/license.js"></script>
+  <script src="mockup-engine.js"></script>
   <script src="canvas-engine.js"></script>
   <script src="editor.js"></script>
 </body>

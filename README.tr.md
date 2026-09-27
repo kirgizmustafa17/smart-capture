@@ -31,11 +31,19 @@
   - **Yumuşak Blur**: Arka planı veya gizli alanları estetik bir biçimde yumuşatın.
 - **Geçmiş & Performans**: `Ctrl+Z` (Geri Al) ve `Ctrl+Y` (Yinele) geçmiş yığını, `willReadFrequently` ile optimize edilmiş 2D tuval işleme motoru.
 
+### 🖼️ Sosyal Medya Mockup Çerçeveleri (PRO)
+- **Degradeli Duvar Kağıtları**: X (Twitter), LinkedIn ve sunum paylaşımları için göz alıcı zemin önayarları (*Kozmik Gece, Kadife Günbatımı, Zümrüt Derinlik, Obsidyen Kafes, Modern Gri, Açık Stüdyo*).
+- **Pencere Çerçevesi & macOS Noktaları**: Gerçekçi macOS kırmızı, sarı, yeşil pencere butonları veya minimal çerçeve görünümü.
+- **Doğal Derinlik & Gölge**: Çok katmanlı yumuşak ve derin gölgeler, ayarlanabilir iç köşe yuvarlatma ve boşluk (padding) seçenekleri.
+- **Freemium & Lisans Mimarisi**: Çekirdek özellikler %100 ücretsiz ve yereldir; Mockup Studio gibi ileri düzey araçlar PRO lisans veya test deneme anahtarı ile etkinleştirilebilir.
+
 ### ⚡ Hızlı İş Akışı, Sağ Dışa Aktarma Paneli (Dock) ve Formatlar
 - **Sağ Dışa Aktarma Kenar Çubuğu (Export Dock)**:
   - Görsel formatı hapları (`PNG`, `JPG`, `WebP`) ile anında format değiştirme.
+  - Mockup Çerçevesi ayarları ve arka plan seçimi.
   - Büyük, dokunsal **Panoya Kopyala** (`Ctrl+C`) ve **Resmi İndir** (`Ctrl+S`) butonları.
   - Canlı görsel çözünürlüğü, en-boy oranı (aspect ratio) ve aktif renk özeti kartı.
+  - Geliştiriciye Destek Ol (Buy Me a Coffee) bağlantısı.
   - Açılıp kapanabilir (toggle/collapse) esnek dock düzeni.
 - **Klavye Kısayolları**: V (Seç), P (Kalem), A (Ok), R (Kutu), O (Daire), H (Vurgu), M (Mozaik), B (Blur), T (Metin), N (Adım), C (Kırp), I (Damlalık).
 - **Yerel Çoklu Dil (i18n)**: Türkçe ve İngilizce tam dil desteği.

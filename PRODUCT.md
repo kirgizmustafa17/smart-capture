@@ -17,6 +17,12 @@ web
 2. **Rectangle / Freehand Capture:** Drag rectangular crop or draw organic lasso contours with sub-pixel canvas rendering.
 3. **Full-Page Stitching:** Automated viewport scrolling and high-DPI canvas stitching.
 4. **Editor Studio:** Annotation tools (Pen, Arrow, Rectangle, Circle, Highlighter, Text, Step badges, Crop), privacy filters (Mosaic, Blur), zoom/pan, and multi-format export (PNG, JPEG, WebP).
+5. **Mockup Studio (PRO Tier):** Social media ready frames with gradient wallpapers (Velvet Sunset, Cosmic Indigo, Emerald, Obsidian, Modern Slate, White Studio), macOS traffic light dots, and deep drop shadows.
+
+## Monetization & Freemium Architecture
+- **Free Tier:** All capture modes (Element, Area, Freehand, Visible, Fullpage), all annotation tools, filters, multi-format export, 100% offline and untracked.
+- **PRO Tier:** Mockup Studio, early access to future OCR & cloud sharing, custom branding.
+- **Support & Licensing:** Voluntary developer support (Buy Me a Coffee) & local sync-stored license key activation with test evaluation keys.
 
 ## Durable Constraints & Guarantees
 - **Zero Remote Tracking:** 100% local processing in the browser sandbox. No external servers or telemetry.
