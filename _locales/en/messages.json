@@ -139,18 +139,6 @@
     "message": "To capture local files (file://), enable 'Allow access to file URLs' in chrome://extensions.",
     "description": "File scheme access warning"
   },
-  "restrictedAboutBlankNotice": {
-    "message": "This popup window (about:blank) cannot be captured directly due to browser security restrictions. View it in Outlook's main tab or use 'Capture Window' below.",
-    "description": "about:blank popup warning"
-  },
-  "captureWindowBtn": {
-    "message": "Capture Window",
-    "description": "Window/screen capture button"
-  },
-  "captureWindowBannerBtn": {
-    "message": "Capture Window with Studio",
-    "description": "Banner capture window button"
-  },
   "toolSelect": {
     "message": "Select & Move",
     "description": "Select tool"
