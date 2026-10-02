@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initShortcuts();
   initStudioLauncher();
   initLicenseStatus();
+  checkCurrentTab();
 });
 
 /**
@@ -109,15 +110,65 @@ function initStudioLauncher() {
 }
 
 /**
+ * Proactively check active tab and warn user if page is restricted
+ */
+async function checkCurrentTab() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tab?.url && SmartUtils.isRestrictedUrl(tab.url)) {
+      showRestrictedBanner(tab.url);
+    }
+  } catch (err) {
+    console.warn("Active tab check notice:", err);
+  }
+}
+
+/**
  * Request background service worker to launch capture mode on active tab
  */
-function launchMode(mode) {
-  chrome.runtime.sendMessage({ action: 'START_MODE', mode }, (response) => {
-    if (response?.error) {
-      alert(SmartUtils.t('restrictedPageNotice', 'Chrome güvenlik kısıtlaması nedeniyle bu sistem sayfasında ekran görüntüsü alınamaz.'));
+async function launchMode(mode) {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab || !tab.id) {
+      showRestrictedBanner(null, 'Aktif sekme bulunamadı.');
+      return;
     }
-    window.close();
-  });
+
+    if (SmartUtils.isRestrictedUrl(tab.url)) {
+      showRestrictedBanner(tab.url);
+      return;
+    }
+
+    chrome.runtime.sendMessage({
+      action: 'START_MODE',
+      mode,
+      tabId: tab.id,
+      windowId: tab.windowId,
+      tabUrl: tab.url
+    }, (response) => {
+      if (chrome.runtime.lastError || response?.error) {
+        const errorMsg = chrome.runtime.lastError?.message || response?.error;
+        showRestrictedBanner(tab.url, errorMsg);
+      } else {
+        window.close();
+      }
+    });
+  } catch (err) {
+    showRestrictedBanner(null, err.message);
+  }
+}
+
+/**
+ * Displays visual notice explaining why screenshots are not permitted on this tab
+ */
+function showRestrictedBanner(url, customMessage) {
+  const banner = document.getElementById('popup-restricted-banner');
+  const bannerText = document.getElementById('restricted-banner-text');
+  if (!banner || !bannerText) return;
+
+  const msg = customMessage || SmartUtils.getRestrictedNotice(url);
+  bannerText.textContent = msg;
+  banner.style.display = 'flex';
 }
 
 /**
