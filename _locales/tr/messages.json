@@ -123,22 +123,6 @@
     "message": "Chrome güvenlik kısıtlaması nedeniyle bu sistem sayfasında ekran görüntüsü alınamaz.",
     "description": "Sistem sayfası uyarısı"
   },
-  "restrictedWebStoreNotice": {
-    "message": "Chrome Web Mağazası sayfalarında güvenlik politikası gereği eklentiler çalışamaz.",
-    "description": "Web Mağazası kısıtlama uyarısı"
-  },
-  "restrictedNewTabNotice": {
-    "message": "Yeni Sekme sayfasında ekran görüntüsü alınamaz. Lütfen standart bir web sitesinde deneyin.",
-    "description": "Yeni sekme sayfası uyarısı"
-  },
-  "restrictedSystemNotice": {
-    "message": "Tarayıcı dahili sistem sayfalarında ekran görüntüsü alınamaz.",
-    "description": "Dahili sistem sayfası uyarısı"
-  },
-  "restrictedFileNotice": {
-    "message": "Yerel dosyalarda (file://) ekran görüntüsü alabilmek için chrome://extensions sayfasından eklenti detaylarına girip 'Dosya URL\\'lerine erişime izin ver' ayarını açmalısınız.",
-    "description": "Dosya erişim izni uyarısı"
-  },
   "toolSelect": {
     "message": "Seç & Taşı",
     "description": "Seçim aracı"

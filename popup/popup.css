@@ -173,34 +173,6 @@ html, body {
 }
 
 /* --------------------------------------------------------------------------
-   RESTRICTED PAGE WARNING BANNER
-   -------------------------------------------------------------------------- */
-.restricted-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.35);
-  color: #fca5a5;
-  padding: 8px 10px;
-  border-radius: 8px;
-  font-size: 11px;
-  line-height: 1.4;
-  animation: bannerFadeIn 0.18s ease-out;
-}
-
-.restricted-banner .restricted-icon {
-  flex-shrink: 0;
-  margin-top: 1px;
-  color: #f87171;
-}
-
-@keyframes bannerFadeIn {
-  from { opacity: 0; transform: translateY(-3px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* --------------------------------------------------------------------------
    CAPTURE MODE CARDS (COMMAND LIST)
    -------------------------------------------------------------------------- */
 .mode-section {

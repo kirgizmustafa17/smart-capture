@@ -56,56 +56,16 @@ function createContextMenus() {
 }
 
 function isRestrictedUrl(url) {
-  if (!url) return true;
-  const u = url.toLowerCase();
-  return (
-    u.startsWith('chrome://') ||
-    u.startsWith('edge://') ||
-    u.startsWith('brave://') ||
-    u.startsWith('opera://') ||
-    u.startsWith('chrome-extension://') ||
-    u.startsWith('chrome-search://') ||
-    u.startsWith('chrome-untrusted://') ||
-    u.startsWith('devtools://') ||
-    u.startsWith('view-source:') ||
-    u.startsWith('about:') ||
-    u.includes('chromewebstore.google.com') ||
-    u.includes('chrome.google.com/webstore')
-  );
-}
-
-async function canCaptureUrl(url) {
-  if (isRestrictedUrl(url)) {
-    return {
-      allowed: false,
-      reason: "Chrome güvenlik kısıtlaması nedeniyle bu sistem sayfasında (ör. Chrome Web Mağazası, Yeni Sekme veya chrome://) ekran görüntüsü alınamaz."
-    };
-  }
-
-  if (url && url.toLowerCase().startsWith('file://')) {
-    const isAllowed = await new Promise((resolve) => {
-      if (chrome.extension && chrome.extension.isAllowedFileSchemeAccess) {
-        chrome.extension.isAllowedFileSchemeAccess(resolve);
-      } else {
-        resolve(false);
-      }
-    });
-
-    if (!isAllowed) {
-      return {
-        allowed: false,
-        reason: "Yerel dosyalarda (file://) ekran görüntüsü alabilmek için chrome://extensions sayfasında SmartCapture ayrıntılarına giderek 'Dosya URL\\'lerine erişime izin ver' seçeneğini etkinleştirmelisiniz."
-      };
-    }
-  }
-
-  return { allowed: true };
+  return !url ||
+    url.startsWith('chrome://') ||
+    url.startsWith('edge://') ||
+    url.startsWith('chrome-extension://') ||
+    url.includes('chrome.google.com/webstore');
 }
 
 async function triggerModeOnTab(tabId, tabUrl, mode) {
-  const check = await canCaptureUrl(tabUrl);
-  if (!check.allowed) {
-    throw new Error(check.reason);
+  if (isRestrictedUrl(tabUrl)) {
+    throw new Error("Restricted system page");
   }
 
   try {
@@ -134,49 +94,27 @@ async function triggerModeOnTab(tabId, tabUrl, mode) {
 }
 
 // Listen for Right-Click Context Menu item clicks
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab || !tab.id || !info.menuItemId.startsWith('mode_')) return;
   const mode = info.menuItemId.replace('mode_', '');
-  try {
-    if (typeof tab.windowId === 'number') {
-      await chrome.windows.update(tab.windowId, { focused: true }).catch(() => {});
-    }
-    await triggerModeOnTab(tab.id, tab.url, mode);
-  } catch (err) {
-    console.warn("Context menu trigger:", err.message);
-  }
+  triggerModeOnTab(tab.id, tab.url, mode).catch(err => console.warn("Context menu trigger:", err));
 });
 
 // Handle screenshot capture and mode messages
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'START_MODE') {
-    (async () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, async ([tab]) => {
+      if (!tab || !tab.id) {
+        sendResponse({ success: false, error: 'No active tab' });
+        return;
+      }
       try {
-        let tabId = message.tabId;
-        let tabUrl = message.tabUrl;
-        let windowId = message.windowId;
-
-        if (!tabId) {
-          const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
-          if (!tab || !tab.id) {
-            sendResponse({ success: false, error: 'Aktif sekme bulunamadı.' });
-            return;
-          }
-          tabId = tab.id;
-          tabUrl = tab.url;
-          windowId = tab.windowId;
-        }
-
-        if (typeof windowId === 'number') {
-          await chrome.windows.update(windowId, { focused: true }).catch(() => {});
-        }
-
-        await triggerModeOnTab(tabId, tabUrl, message.mode);
+        await triggerModeOnTab(tab.id, tab.url, message.mode);
         sendResponse({ success: true });
       } catch (err) {
         sendResponse({ success: false, error: err.message });
       }
-    })();
+    });
     return true;
   }
 
@@ -198,40 +136,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     const handleResult = (dataUrl) => {
       if (chrome.runtime.lastError) {
-        const rawError = chrome.runtime.lastError.message || '';
-        console.warn("captureVisibleTab warning:", rawError);
-        let friendlyError = rawError;
-        if (rawError.includes("Cannot access contents") || rawError.includes("permission to access the respective host")) {
-          friendlyError = "Chrome güvenlik politikası nedeniyle bu sayfanın görseli yakalanamıyor (Sistem sayfası, korumalı açılır pencere veya yerel dosya izni kapalı).";
-        }
-        sendResponse({ success: false, error: friendlyError });
+        console.error("captureVisibleTab error:", chrome.runtime.lastError.message);
+        sendResponse({ success: false, error: chrome.runtime.lastError.message });
       } else if (!dataUrl) {
-        sendResponse({ success: false, error: "Tarayıcıdan boş ekran görüntüsü döndü." });
+        sendResponse({ success: false, error: "Empty screenshot returned by browser" });
       } else {
         sendResponse({ success: true, dataUrl });
       }
     };
 
-    (async () => {
-      try {
-        let winId = (sender.tab && typeof sender.tab.windowId === 'number') ? sender.tab.windowId : null;
-        if (winId !== null) {
-          await chrome.windows.update(winId, { focused: true }).catch(() => {});
-          chrome.tabs.captureVisibleTab(winId, options, handleResult);
-        } else {
-          const win = await chrome.windows.getLastFocused().catch(() => null);
-          if (win && typeof win.id === 'number') {
-            await chrome.windows.update(win.id, { focused: true }).catch(() => {});
-            chrome.tabs.captureVisibleTab(win.id, options, handleResult);
-          } else {
-            chrome.tabs.captureVisibleTab(options, handleResult);
-          }
-        }
-      } catch (err) {
-        console.warn("captureVisibleTab exception:", err);
-        sendResponse({ success: false, error: err.message });
+    try {
+      if (sender.tab && typeof sender.tab.windowId === 'number') {
+        chrome.tabs.captureVisibleTab(sender.tab.windowId, options, handleResult);
+      } else {
+        chrome.tabs.captureVisibleTab(options, handleResult);
       }
-    })();
+    } catch (err) {
+      console.error("captureVisibleTab exception:", err);
+      sendResponse({ success: false, error: err.message });
+    }
 
     return true; // Keep message channel open for async response
   }

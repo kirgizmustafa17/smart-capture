@@ -123,22 +123,6 @@
     "message": "Due to Chrome security policies, screenshots cannot be captured on this internal page.",
     "description": "Restricted page notification"
   },
-  "restrictedWebStoreNotice": {
-    "message": "Extensions cannot interact with Chrome Web Store pages due to browser security policies.",
-    "description": "Chrome Web Store restriction warning"
-  },
-  "restrictedNewTabNotice": {
-    "message": "Screenshots cannot be taken on the default New Tab page. Please test on a standard website.",
-    "description": "New Tab page restriction warning"
-  },
-  "restrictedSystemNotice": {
-    "message": "Browser system settings and internal pages cannot be captured.",
-    "description": "Internal system page warning"
-  },
-  "restrictedFileNotice": {
-    "message": "To capture local files (file://), enable 'Allow access to file URLs' in chrome://extensions.",
-    "description": "File scheme access warning"
-  },
   "toolSelect": {
     "message": "Select & Move",
     "description": "Select tool"
