@@ -11,65 +11,207 @@ let currentZoom = 1;
 let currentImageSrc = null;
 
 function initStudio() {
+  setupToolInteractions();
+  setupStrokeWidthControls();
+  setupColorPalette();
+  setupHistoryControls();
+  setupZoomControls();
+  setupExportActions();
+  setupExportDock();
+  setupKeyboardShortcuts();
+  setupCropInteraction();
+  setupCursorTracking();
+  setupEyedropperLoupe();
+  setupLicenseAndProModal();
+  setupMockupFrameControls();
+  setupScreenCapture();
+  setupClipboardAndDrop();
+  initI18n();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const action = urlParams.get('action');
+
+  if (action === 'capture_screen') {
+    captureScreenOrWindow();
+  } else {
+    // Load screenshot data from chrome.storage.local
+    chrome.storage.local.get(['pendingScreenshot'], (result) => {
+      const dataUrl = result.pendingScreenshot;
+      if (dataUrl) {
+        loadNewImage(dataUrl);
+      } else {
+        const dimInfo = document.getElementById('image-dimensions-info');
+        if (dimInfo) dimInfo.textContent = "Görsel bekleniyor...";
+        SmartUtils.showToast("Görsel yakalamak için 'Pencere Yakala' butonunu kullanabilir veya panodan yapıştırabilirsiniz (Ctrl+V).", "info");
+      }
+    });
+  }
+}
+
+/**
+ * Loads a new screenshot or image dataURL into the SmartEditor canvas
+ */
+function loadNewImage(dataUrl) {
+  if (!dataUrl) return;
+  currentImageSrc = dataUrl;
   const canvasEl = document.getElementById('studio-canvas');
-  const dimInfo = document.getElementById('image-dimensions-info');
   const undoBtn = document.getElementById('btn-undo');
   const redoBtn = document.getElementById('btn-redo');
   const deleteBtn = document.getElementById('btn-delete');
 
-  // Load screenshot data from chrome.storage.local
-  chrome.storage.local.get(['pendingScreenshot'], (result) => {
-    const dataUrl = result.pendingScreenshot;
-    if (!dataUrl) {
-      dimInfo.textContent = "Görsel yüklenemedi.";
-      SmartUtils.showToast("Görsel bulunamadı veya aktarılamadı.", "error");
+  if (window.SmartEditor && canvasEl) {
+    SmartEditor.initEditor(
+      canvasEl,
+      dataUrl,
+      ({ canUndo, canRedo }) => {
+        if (undoBtn) undoBtn.disabled = !canUndo;
+        if (redoBtn) redoBtn.disabled = !canRedo;
+        updateDimensions();
+      },
+      (selectedEl) => {
+        if (deleteBtn) deleteBtn.disabled = !selectedEl;
+        if (selectedEl) {
+          if (selectedEl.color) {
+            updateActiveColorUI(selectedEl.color);
+          }
+          if (selectedEl.strokeWidth) {
+            document.querySelectorAll('.stroke-btn').forEach(b => {
+              b.classList.toggle('active', parseInt(b.dataset.stroke, 10) === selectedEl.strokeWidth);
+            });
+          }
+        }
+      }
+    );
+  }
+
+  updateDimensions();
+  if (typeof window.applyZoom === 'function') {
+    window.applyZoom(1);
+  }
+}
+
+/**
+ * Capture any application, popup or screen using standard navigator.mediaDevices.getDisplayMedia
+ */
+async function captureScreenOrWindow() {
+  try {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+      SmartUtils.showToast("Tarayıcınız pencere yakalama özelliğini desteklemiyor.", "error");
       return;
     }
 
-    currentImageSrc = dataUrl;
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: {
+        displaySurface: 'window'
+      },
+      audio: false
+    });
 
-    // Initialize SmartEditor Canvas with history & selection callbacks
-    if (window.SmartEditor) {
-      SmartEditor.initEditor(
-        canvasEl,
-        dataUrl,
-        ({ canUndo, canRedo }) => {
-          if (undoBtn) undoBtn.disabled = !canUndo;
-          if (redoBtn) redoBtn.disabled = !canRedo;
-          updateDimensions();
-        },
-        (selectedEl) => {
-          if (deleteBtn) deleteBtn.disabled = !selectedEl;
-          if (selectedEl) {
-            if (selectedEl.color) {
-              updateActiveColorUI(selectedEl.color);
-            }
-            if (selectedEl.strokeWidth) {
-              document.querySelectorAll('.stroke-btn').forEach(b => {
-                b.classList.toggle('active', parseInt(b.dataset.stroke, 10) === selectedEl.strokeWidth);
-              });
-            }
-          }
-        }
-      );
+    const video = document.createElement('video');
+    video.playsInline = true;
+    video.muted = true;
+    video.srcObject = stream;
+
+    await new Promise((resolve, reject) => {
+      video.onloadedmetadata = () => {
+        video.play().then(resolve).catch(reject);
+      };
+      video.onerror = reject;
+    });
+
+    // Buffer pause for frame rendering
+    await new Promise(r => setTimeout(r, 120));
+
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = video.videoWidth || 1920;
+    tempCanvas.height = video.videoHeight || 1080;
+    const ctx = tempCanvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
+
+    // Stop all media tracks immediately
+    stream.getTracks().forEach(track => track.stop());
+
+    const dataUrl = tempCanvas.toDataURL('image/png');
+    loadNewImage(dataUrl);
+    SmartUtils.showToast("Pencere başarıyla yakalandı ve stüdyoya yüklendi!", "success");
+  } catch (err) {
+    if (err.name !== 'NotAllowedError' && err.name !== 'AbortError') {
+      console.warn("Screen capture failed:", err);
+      SmartUtils.showToast("Pencere yakalama başarısız oldu: " + (err.message || err.name), "error");
+    }
+  }
+}
+
+/**
+ * Window & Screen capture toolbar button handler
+ */
+function setupScreenCapture() {
+  const btn = document.getElementById('btn-screen-capture');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      captureScreenOrWindow();
+    });
+  }
+}
+
+/**
+ * Setup Ctrl+V clipboard paste & Drag-and-drop image import
+ */
+function setupClipboardAndDrop() {
+  // Clipboard paste (Ctrl+V)
+  document.addEventListener('paste', (e) => {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+      return;
     }
 
-    updateDimensions();
-    setupToolInteractions();
-    setupStrokeWidthControls();
-    setupColorPalette();
-    setupHistoryControls();
-    setupZoomControls();
-    setupExportActions();
-    setupExportDock();
-    setupKeyboardShortcuts();
-    setupCropInteraction();
-    setupCursorTracking();
-    setupEyedropperLoupe();
-    setupLicenseAndProModal();
-    setupMockupFrameControls();
-    initI18n();
+    const items = (e.clipboardData || e.originalEvent?.clipboardData)?.items;
+    if (!items) return;
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image') !== -1) {
+        const blob = items[i].getAsFile();
+        if (blob) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            loadNewImage(event.target.result);
+            SmartUtils.showToast("Panodaki görsel stüdyoya aktarıldı!", "success");
+          };
+          reader.readAsDataURL(blob);
+          e.preventDefault();
+          break;
+        }
+      }
+    }
   });
+
+  // Drag and Drop
+  const workspace = document.getElementById('editor-workspace') || document.body;
+  if (workspace) {
+    workspace.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.dataTransfer.dropEffect = 'copy';
+    });
+
+    workspace.addEventListener('drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const files = e.dataTransfer.files;
+      if (files && files.length > 0) {
+        const file = files[0];
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            loadNewImage(event.target.result);
+            SmartUtils.showToast("Görsel stüdyoya yüklendi!", "success");
+          };
+          reader.readAsDataURL(file);
+        } else {
+          SmartUtils.showToast("Lütfen geçerli bir görsel dosyası sürükleyin.", "error");
+        }
+      }
+    });
+  }
 }
 
 function initI18n() {
@@ -316,6 +458,8 @@ function setupZoomControls() {
       wrapper.style.transformOrigin = 'center center';
     }
   }
+
+  window.applyZoom = applyZoom;
 
   if (zoomInBtn) {
     zoomInBtn.addEventListener('click', () => applyZoom(currentZoom + 0.15));

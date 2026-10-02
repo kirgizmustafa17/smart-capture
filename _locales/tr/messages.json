@@ -139,6 +139,18 @@
     "message": "Yerel dosyalarda (file://) ekran görüntüsü alabilmek için chrome://extensions sayfasından eklenti detaylarına girip 'Dosya URL\\'lerine erişime izin ver' ayarını açmalısınız.",
     "description": "Dosya erişim izni uyarısı"
   },
+  "restrictedAboutBlankNotice": {
+    "message": "Bu açılır pencere (about:blank) tarayıcı güvenlik politikası nedeniyle doğrudan taranamamaktadır. Outlook ana sekmesinden açabilir veya aşağıdaki butonla Pencereyi Yakalayabilirsiniz.",
+    "description": "about:blank açılır pencere uyarısı"
+  },
+  "captureWindowBtn": {
+    "message": "Pencere Yakala",
+    "description": "Pencere/ekran yakalama butonu"
+  },
+  "captureWindowBannerBtn": {
+    "message": "Stüdyo ile Pencereyi Yakala",
+    "description": "Banner pencere yakalama butonu"
+  },
   "toolSelect": {
     "message": "Seç & Taşı",
     "description": "Seçim aracı"

@@ -107,6 +107,14 @@ function initStudioLauncher() {
       });
     });
   }
+
+  const bannerCaptureBtn = document.getElementById('btn-banner-capture-window');
+  if (bannerCaptureBtn) {
+    bannerCaptureBtn.addEventListener('click', () => {
+      chrome.tabs.create({ url: chrome.runtime.getURL('editor/editor.html?action=capture_screen') });
+      window.close();
+    });
+  }
 }
 
 /**
